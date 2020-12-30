@@ -7,9 +7,9 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    std::string line, code;
+    string line, code;
 
-    std::ifstream in(argv[1]);
+    ifstream in(argv[1]);
     if (in.is_open())
     {
         while (getline(in, line))
@@ -19,5 +19,6 @@ int main(int argc, char* argv[])
     }
     in.close();
 	Parser parser = Parser(code);
+    parser.parse();
 	return 0;
 }

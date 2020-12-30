@@ -10,8 +10,11 @@ public:
 	Parser(string c);
 	~Parser();
 
+	void parse();
+
 	string code;
+	int index;
 
 private:
-
+	void skipws();
 };

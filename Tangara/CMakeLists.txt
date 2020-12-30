@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Tangara)
 
-set(SOURCES "src/main.cpp" "src/Parser.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_library(Tangara ${SOURCES})
 
