@@ -9,17 +9,16 @@ public:
 	CodeBody();
 	~CodeBody();
 
-	vector<ICommand> body;
+	int hash;
 private:
 
 };
 
 CodeBody::CodeBody()
 {
-	body = vector<ICommand>();
+	hash = 0;
 }
 
 CodeBody::~CodeBody()
 {
-	//delete body.data;
 }

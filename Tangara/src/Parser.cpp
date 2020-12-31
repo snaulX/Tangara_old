@@ -11,10 +11,9 @@ Parser::~Parser()
 {
 }
 
-Parser::Parser(string c)
+Parser::Parser(string c) : Parser()
 {
 	code = c;
-	index = 0;
 }
 
 void Parser::parse()

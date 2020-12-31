@@ -12,4 +12,7 @@ public:
 
 private:
 	vector<Class> classes;
+	vector<Function> functions;
+	vector<Variable> variables;
+	vector<CodeBody> bodies;
 };

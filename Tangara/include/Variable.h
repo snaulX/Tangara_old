@@ -2,6 +2,14 @@
 
 using namespace std;
 
+enum Security
+{
+	PUBLIC,
+	PRIVATE,
+	PROTECTED,
+	INTERNAL
+};
+
 class Variable
 {
 public:
@@ -15,6 +23,7 @@ public:
 
 	string name;
 	string type;
+	Security security;
 private:
 
 };

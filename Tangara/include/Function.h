@@ -72,7 +72,8 @@ public:
 
 	CodeBody* body;
 	string name;
-	Parameter* params[];
+	Parameter* params;
+	Security security;
 private:
 
 };
@@ -128,6 +129,25 @@ AbstractFunction::AbstractFunction()
 }
 
 AbstractFunction::~AbstractFunction()
+{
+}
+
+class FuncAlias : public Function
+{
+public:
+	FuncAlias();
+	~FuncAlias();
+
+	string aliasedName;
+private:
+
+};
+
+FuncAlias::FuncAlias()
+{
+}
+
+FuncAlias::~FuncAlias()
 {
 }
 #pragma endregion

@@ -1,5 +1,8 @@
 #include <vector>
 #include <string>
+#include <map>
+#include "Template.h"
+#include "File.h"
 
 using namespace std;
 
@@ -14,7 +17,8 @@ public:
 
 	string code;
 	int index;
-
+	static File* currentFile;
 private:
 	void skipws();
+	void package();
 };

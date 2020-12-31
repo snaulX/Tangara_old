@@ -15,6 +15,7 @@ public:
 	}
 
 	string name;
+	Security security;
 private:
 
 };
@@ -26,8 +27,8 @@ public:
 	~DefaultClass();
 
 	DefaultCtor* defaultCtor;
-	NamedCtor* namedCtors[];
-	DefaultCtor* overloadCtors[];
+	NamedCtor* namedCtors;
+	DefaultCtor* overloadCtors;
 private:
 
 };
@@ -55,5 +56,24 @@ StaticClass::StaticClass()
 }
 
 StaticClass::~StaticClass()
+{
+}
+
+class TypeAlias : public Class
+{
+public:
+	TypeAlias();
+	~TypeAlias();
+
+	string aliasedName;
+private:
+
+};
+
+TypeAlias::TypeAlias()
+{
+}
+
+TypeAlias::~TypeAlias()
 {
 }
