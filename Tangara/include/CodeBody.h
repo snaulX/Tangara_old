@@ -6,19 +6,13 @@ using namespace std;
 class CodeBody
 {
 public:
-	CodeBody();
+	CodeBody()
+	{
+		hash = 0;
+	}
 	~CodeBody();
 
 	int hash;
 private:
 
 };
-
-CodeBody::CodeBody()
-{
-	hash = 0;
-}
-
-CodeBody::~CodeBody()
-{
-}

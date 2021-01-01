@@ -31,14 +31,6 @@ private:
 
 };
 
-DefaultParameter::DefaultParameter()
-{
-}
-
-DefaultParameter::~DefaultParameter()
-{
-}
-
 class Params : public Parameter
 {
 public:
@@ -48,14 +40,6 @@ public:
 private:
 
 };
-
-Params::Params()
-{
-}
-
-Params::~Params()
-{
-}
 #pragma endregion
 
 #pragma region Functions
@@ -88,14 +72,6 @@ private:
 
 };
 
-DefaultFunction::DefaultFunction()
-{
-}
-
-DefaultFunction::~DefaultFunction()
-{
-}
-
 class StaticFunction : public Function
 {
 public:
@@ -105,14 +81,6 @@ public:
 private:
 
 };
-
-StaticFunction::StaticFunction()
-{
-}
-
-StaticFunction::~StaticFunction()
-{
-}
 
 class AbstractFunction : public Function
 {
@@ -124,14 +92,6 @@ private:
 
 };
 
-AbstractFunction::AbstractFunction()
-{
-}
-
-AbstractFunction::~AbstractFunction()
-{
-}
-
 class FuncAlias : public Function
 {
 public:
@@ -142,14 +102,6 @@ public:
 private:
 
 };
-
-FuncAlias::FuncAlias()
-{
-}
-
-FuncAlias::~FuncAlias()
-{
-}
 #pragma endregion
 
 #pragma region Constructors
@@ -179,14 +131,6 @@ private:
 
 };
 
-DefaultCtor::DefaultCtor()
-{
-}
-
-DefaultCtor::~DefaultCtor()
-{
-}
-
 class NamedCtor : public Constructor
 {
 public:
@@ -197,12 +141,4 @@ public:
 private:
 
 };
-
-NamedCtor::NamedCtor()
-{
-}
-
-NamedCtor::~NamedCtor()
-{
-}
 #pragma endregion

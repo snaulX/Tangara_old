@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     {
         while (getline(in, line))
         {
-            code.append(line);
+            code.append(line + '\n');
         }
     }
     in.close();

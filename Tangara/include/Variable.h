@@ -39,14 +39,6 @@ private:
 
 };
 
-DefaultVar::DefaultVar()
-{
-}
-
-DefaultVar::~DefaultVar()
-{
-}
-
 class StaticVariable
 {
 public:
@@ -56,11 +48,3 @@ public:
 private:
 
 };
-
-StaticVariable::StaticVariable()
-{
-}
-
-StaticVariable::~StaticVariable()
-{
-}

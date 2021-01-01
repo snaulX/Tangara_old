@@ -33,14 +33,6 @@ private:
 
 };
 
-DefaultClass::DefaultClass()
-{
-}
-
-DefaultClass::~DefaultClass()
-{
-}
-
 class StaticClass : public Class
 {
 public:
@@ -50,14 +42,6 @@ public:
 private:
 
 };
-
-StaticClass::StaticClass()
-{
-}
-
-StaticClass::~StaticClass()
-{
-}
 
 class TypeAlias : public Class
 {
@@ -69,11 +53,3 @@ public:
 private:
 
 };
-
-TypeAlias::TypeAlias()
-{
-}
-
-TypeAlias::~TypeAlias()
-{
-}
