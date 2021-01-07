@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 #include "Class.h"
 
 using namespace std;
@@ -10,6 +11,7 @@ public:
 	static vector<Function> functions;
 	static vector<Variable> variables;
 	static vector<CodeBody> bodies;
+	static vector<string> usingNamespaces;
 
-	void writeTokens(string path);
+	static void writeTokens(string path);
 };

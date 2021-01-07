@@ -5,7 +5,7 @@ using namespace std;
 Parser::Parser()
 {
 	index = 0;
-	addstemplate("package", package);
+	main = &CodeBody();
 }
 
 Parser::~Parser()
@@ -71,6 +71,12 @@ void Parser::package()
 	packageName = getKeyword();
 	isExprEnd();
 }
+void Parser::use()
+{
+	skipws();
+	Project::usingNamespaces.push_back(getKeyword());
+	isExprEnd();
+}
 
 void Parser::parseKeyword(string keyword)
 {
@@ -82,17 +88,23 @@ void Parser::parseKeyword(string keyword)
 	//if (f != nullptr)
 		//(this->*f)();*/
 
-	if (keyword == "package") package();
+	if (keyword == PACKAGE_KEYWORD) package();
+	else if (keyword == USE_KEYWORD) use();
 	else
 	{
 		// is not keyword
 		char c = code[index];
 		if (iswpunct(c))
 		{
-			if (c == '.')
+			vector<string> callable = vector<string>();
+			callable.push_back(keyword);
+			while (c == '.')
 			{
 				// this keyword is callable object
+				index++;
+				callable.push_back(getKeyword());
 			}
+			main->addCommand(Callable(callable));
 		}
 	}
 }
