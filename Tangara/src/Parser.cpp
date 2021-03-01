@@ -93,18 +93,24 @@ void Parser::parseKeyword(string keyword)
 	else
 	{
 		// is not keyword
-		char c = code[index];
-		if (iswpunct(c))
+		if (iswpunct(current()))
 		{
 			vector<string> callable = vector<string>();
 			callable.push_back(keyword);
-			while (c == '.')
+			while (current() == '.')
 			{
 				// this keyword is callable object
 				index++;
 				callable.push_back(getKeyword());
 			}
 			main->addCommand(Callable(callable));
+			switch (current())
+			{
+			case '(':
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }

@@ -6,8 +6,13 @@
 
 using namespace std;
 
+#if CSHARP || CPP
+#define USE_KEYWORD "using"
+#define PACKAGE_KEYWORD "namespace"
+#else
 #define USE_KEYWORD "use"
 #define PACKAGE_KEYWORD "package"
+#endif
 #define CLASS_KEYWORD "class"
 #define FUNCTION_KEYWORD "fun"
 #define VARIABLE_KEYWORD "var"
@@ -35,5 +40,6 @@ private:
 	void parseKeyword(string keyword);
 	void isExprEnd();
 	string getKeyword();
+	char current();
 	CodeBody* main;
 };

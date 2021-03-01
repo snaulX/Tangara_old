@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <fstream>
 #include "Class.h"
 
 using namespace std;
@@ -12,6 +13,10 @@ public:
 	static vector<Variable> variables;
 	static vector<CodeBody> bodies;
 	static vector<string> usingNamespaces;
+	static ofstream tokensStream;
 
-	static void writeTokens(string path);
+	static void writeTokens(string path)
+	{
+		tokensStream.open(path);
+	}
 };
