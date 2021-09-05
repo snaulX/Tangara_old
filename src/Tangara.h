@@ -2,97 +2,96 @@
 #ifndef TANGARA_H
 #define TANGARA_H
 
-#include <stdio.h>
-#include <stdlib.h>
-//#include "base.h"
+#include "base.h"
 #include "constants.h"
 
 #ifdef __cplusplus
 extern "C" {  // only need to export C interface if used by C++ source code
 #endif
 
-typedef struct Var Var;
-typedef struct Field Field;
-typedef struct Class Class;
-typedef struct Func Func;
-typedef struct VarBlock VarBlock;
-typedef struct FieldBlock FieldBlock;
-typedef struct FuncBlock FuncBlock;
+typedef struct TgVar TgVar;
+typedef struct TgField TgField;
+typedef struct TgClass TgClass;
+typedef struct TgFunc TgFunc;
+typedef struct TgClassBlock TgClassBlock;
+typedef struct TgVarBlock TgVarBlock;
+typedef struct TgFieldBlock TgFieldBlock;
+typedef struct TgFuncBlock TgFuncBlock;
 
-struct Class {
+struct TgClass {
     unsigned int visibility: 1;
     unsigned int class_type: 2;
-    char *name;
-    FieldBlock *fields;
-    FuncBlock *methods;
+    char_t *name;
+    TgFieldBlock *fields;
+    TgFuncBlock *methods;
 };
 
-struct Var {
-    char *name;
-    Class *type;
+struct TgVar {
+    char_t *name;
+    TgClass *type;
     void *value;
 };
 
-struct Field {
+struct TgField {
     unsigned int visibility: 2;
     unsigned int var_type: 1;
-    Var var;
+    TgVar var;
 };
 
-struct Func {
+struct TgFunc {
     unsigned int visibility: 2;
     unsigned int func_type: 2;
-    char *name;
-    Class *return_type;
-    VarBlock *parameters;
+    char_t *name;
+    TgClass *return_type;
+    TgVarBlock *parameters;
 };
 
-#define CLASS_SIZE sizeof(Class)
-#define FUNC_SIZE sizeof(Func)
-#define VAR_SIZE sizeof(Var)
-#define FIELD_SIZE sizeof(Field)
+#define CLASS_SIZE sizeof(TgClass)
+#define FUNC_SIZE sizeof(TgFunc)
+#define VAR_SIZE sizeof(TgVar)
+#define FIELD_SIZE sizeof(TgField)
 
-typedef struct {
+struct TgClassBlock {
     unsigned count;
-    Class *classes;
-} ClassBlock;
-
-struct FuncBlock {
-    unsigned count;
-    Func *functions;
+    TgClass *classes;
 };
 
-struct VarBlock {
+struct TgFuncBlock {
     unsigned count;
-    Var *variables;
+    TgFunc *functions;
 };
 
-struct FieldBlock {
+struct TgVarBlock {
     unsigned count;
-    Field *fields;
+    TgVar *variables;
 };
 
-TANGARA_API ClassBlock init_class_block();
+struct TgFieldBlock {
+    unsigned count;
+    TgField *fields;
+};
 
-TANGARA_API FuncBlock init_func_block();
+TANGARA_API TgClassBlock tgInitClassBlock();
 
-TANGARA_API VarBlock init_var_block();
+TANGARA_API TgFuncBlock tgInitFuncBlock();
 
-TANGARA_API FieldBlock init_field_block();
+TANGARA_API TgVarBlock tgInitVarBlock();
 
-TANGARA_API Class init_class(unsigned visibility, unsigned class_type, char *name);
+TANGARA_API TgFieldBlock tgInitFieldBlock();
 
-TANGARA_API Field init_field(unsigned visibility, unsigned field_type, char *name, Class *type, void *value);
+TANGARA_API TgClass tgInitClass(unsigned visibility, unsigned class_type, char_t *name);
 
-TANGARA_API Func init_func(unsigned visibility, unsigned func_type, char *name, Class *return_type, VarBlock *params);
+TANGARA_API TgField tgInitField(unsigned visibility, unsigned field_type, char_t *name, TgClass *type, void *value);
 
-TANGARA_API void add_class(Class, ClassBlock *);
+TANGARA_API TgFunc tgInitFunc(unsigned visibility, unsigned func_type, char_t *name, TgClass *return_type, TgVarBlock *params);
 
-TANGARA_API void add_func(Func, FuncBlock *);
+TANGARA_API void tgAddClass(TgClass, TgClassBlock *);
 
-TANGARA_API void add_var(Var, VarBlock *);
+TANGARA_API void tgAddFunc(TgFunc, TgFuncBlock *);
 
-TANGARA_API void add_field(Field, FieldBlock *);
+TANGARA_API void tgAddVar(TgVar, TgVarBlock *);
+
+TANGARA_API void tgAddField(TgField, TgFieldBlock *);
 
 #ifdef __cplusplus
 }

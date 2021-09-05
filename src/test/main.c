@@ -3,22 +3,22 @@
 
 int main(void)
 {
-    Class string = init_class(PUBLIC, DEFAULT, "string");
-    Field name = init_field(PUBLIC, DEFAULT, "name", &string, "Alexander");
-    VarBlock params = init_var_block();
-    Func func = init_func(PUBLIC, DEFAULT, "func", NULL, &params);
-    Class main = init_class(PUBLIC, DEFAULT, "Main");
-    FieldBlock fb = init_field_block();
+    TgClass string = tgInitClass(PUBLIC, DEFAULT, STR("string"));
+    TgField name = tgInitField(PUBLIC, DEFAULT, STR("name"), &string, STR("Alexander"));
+    TgVarBlock params = tgInitVarBlock();
+    TgFunc func = tgInitFunc(PUBLIC, DEFAULT, STR("func"), NULL, &params);
+    TgClass main = tgInitClass(PUBLIC, DEFAULT, STR("Main"));
+    TgFieldBlock fb = tgInitFieldBlock();
     main.fields = &fb;
-    add_field(name, &fb /*main.fields*/);
-    //add_func(func, main.methods);
-    ClassBlock clb = init_class_block();
-    add_class(main, &clb);
-    printf("%s\n", clb.classes[0].name);
-    FILE* file = open_write("test.tgr");
-    write_class_block(file, &clb);
-    close_file(file);
-    file = open_read("test.tgr");
-    read_class_block(file, &clb);
-    printf("%s\n", clb.classes[0].fields->fields[0].var.name);
+    tgAddField(name, &fb /*main.fields*/);
+    //tgAddFunc(func, main.methods);
+    TgClassBlock clb = tgInitClassBlock();
+    tgAddClass(main, &clb);
+    print(clb.classes[0].name);
+    FILE* file = tgOpenWrite("test.tgr");
+    tgWriteClassBlock(file, &clb);
+    tgCloseFile(file);
+    file = tgOpenRead("test.tgr");
+    tgReadClassBlock(file, &clb);
+    print(clb.classes[0].fields->fields[0].var.value);
 }

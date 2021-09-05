@@ -1,60 +1,60 @@
 #include "Tangara.h"
 
-ClassBlock init_class_block()
+TgClassBlock tgInitClassBlock()
 {
-    ClassBlock classBlock = {0, NULL};
+    TgClassBlock classBlock = {0, NULL};
     return classBlock;
 }
-FuncBlock init_func_block()
+TgFuncBlock tgInitFuncBlock()
 {
-    FuncBlock funcBlock = {0, NULL};
+    TgFuncBlock funcBlock = {0, NULL};
     return funcBlock;
 }
-VarBlock init_var_block()
+TgVarBlock tgInitVarBlock()
 {
-    VarBlock varBlock = {0, NULL};
+    TgVarBlock varBlock = {0, NULL};
     return varBlock;
 }
-FieldBlock init_field_block()
+TgFieldBlock tgInitFieldBlock()
 {
-    FieldBlock fieldBlock = {0, NULL};
+    TgFieldBlock fieldBlock = {0, NULL};
     return fieldBlock;
 }
 
-Class init_class(unsigned visibility, unsigned class_type, char* name)
+TgClass tgInitClass(unsigned visibility, unsigned class_type, char_t* name)
 {
-    FieldBlock fields = init_field_block();
-    FuncBlock methods = init_func_block();
-    Class _class = {visibility, class_type, name, &fields, &methods};
+    TgFieldBlock fields = tgInitFieldBlock();
+    TgFuncBlock methods = tgInitFuncBlock();
+    TgClass _class = {visibility, class_type, name, &fields, &methods};
     return _class;
 }
-Func init_func(unsigned visibility, unsigned func_type, char* name, Class* return_type, VarBlock* params)
+TgFunc tgInitFunc(unsigned visibility, unsigned func_type, char_t* name, TgClass* return_type, TgVarBlock* params)
 {
-    Func func = {visibility, func_type, name, return_type, params};
+    TgFunc func = {visibility, func_type, name, return_type, params};
     return func;
 }
-Field init_field(unsigned visibility, unsigned field_type, char* name, Class* type, void* value)
+TgField tgInitField(unsigned visibility, unsigned field_type, char_t* name, TgClass* type, void* value)
 {
-    Field field = {visibility, field_type, name, type, value};
+    TgField field = {visibility, field_type, name, type, value};
     return field;
 }
 
-void add_class(Class cl, ClassBlock* classBlock)
+void tgAddClass(TgClass cl, TgClassBlock* classBlock)
 {
     classBlock->classes = realloc(classBlock->classes, ++classBlock->count * CLASS_SIZE);
     classBlock->classes[classBlock->count - 1] = cl;
 }
-void add_func(Func func, FuncBlock* funcBlock)
+void tgAddFunc(TgFunc func, TgFuncBlock* funcBlock)
 {
     funcBlock->functions = realloc(funcBlock->functions, ++funcBlock->count * FUNC_SIZE);
     funcBlock->functions[funcBlock->count - 1] = func;
 }
-void add_var(Var var, VarBlock* varBlock)
+void tgAddVar(TgVar var, TgVarBlock* varBlock)
 {
     varBlock->variables = realloc(varBlock->variables, ++varBlock->count * VAR_SIZE);
     varBlock->variables[varBlock->count - 1] = var;
 }
-void add_field(Field field, FieldBlock* fieldBlock)
+void tgAddField(TgField field, TgFieldBlock* fieldBlock)
 {
     fieldBlock->fields = realloc(fieldBlock->fields, ++fieldBlock->count * FIELD_SIZE);
     fieldBlock->fields[fieldBlock->count - 1] = field;
