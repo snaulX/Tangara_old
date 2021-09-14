@@ -23,14 +23,3 @@ FILE* tgOpenRead(const char* file_name)
 	}
 	return fp;
 }
-
-void tgWriteClassBlock(FILE* file, TgClassBlock* classBlock)
-{
-    //fwrite(classBlock->classes, CLASS_SIZE, classBlock->count, file);
-    fwrite(classBlock, sizeof(TgClassBlock), 1, file);
-}
-void tgReadClassBlock(FILE* file, TgClassBlock* classBlock)
-{
-    //fread(classBlock->classes, CLASS_SIZE, classBlock->count, file);
-    fread(classBlock, sizeof(TgClassBlock), 1, file);
-}

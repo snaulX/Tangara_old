@@ -58,49 +58,43 @@ struct {
 #define ARRNAME(type) type##Array
 #define EMPTY_ARRAY {0, NULL}
 #define INIT_ARRAY(type) tgInit##type##Array ()
+#define GEN_ARRSTRUCT(type) struct ARRNAME(type) {size_t count; type* data;};
 #define GEN_ARRTYPE(type) typedef ARRAY(type) ARRNAME(type);
 
-#define GEN_INIT_METHOD(type) TANGARA_API ARRNAME(type) INIT_ARRAY(type) \
+#define GEN_INIT_METHOD(type) TANGARA_API inline ARRNAME(type) INIT_ARRAY(type) \
 { \
 ARRNAME(type) arr = EMPTY_ARRAY; \
 return arr; \
 }
 
-#define GEN_ADD_METHOD(type) TANGARA_API void tgAdd##type(type data, ARRNAME(type)* arr) \
+#define GEN_ADD_METHOD(type) TANGARA_API inline void tgAdd##type(type data, ARRNAME(type)* arr) \
 { \
 arr->data = realloc(arr->data, ++arr->count * sizeof(data)); \
 arr->data[arr->count - 1] = data; \
 }
 
-#define GEN_GET_METHOD(type) TANGARA_API type* tgGet##type##FromArray(ARRNAME(type) arr, unsigned index) \
+#define GEN_GET_METHOD(type) TANGARA_API inline type* tgGet##type##FromArray(ARRNAME(type) arr, unsigned index) \
 { \
 if (index >= arr.count) \
 err("Index greater or equals then length of array") \
 return &arr.data[index]; \
 }
 
-#define GEN_ARRAY(type) GEN_ARRTYPE(type) \
+#define GEN_ARRAY_TYPE(type) GEN_ARRTYPE(type) \
     GEN_INIT_METHOD(type)                   \
     GEN_ADD_METHOD(type)                    \
     GEN_GET_METHOD(type)
 
-#define ADD(type, data, arr) tgAdd##type(data, &arr)
+#define GEN_ARRAY_STRUCT(type) GEN_ARRSTRUCT(type) \
+    GEN_INIT_METHOD(type)                   \
+    GEN_ADD_METHOD(type)                    \
+    GEN_GET_METHOD(type)
+
+#define ADD(type, data, arr) tgAdd##type(data, arr)
 #define GET(type, index, arr) tgGet##type##FromArray(arr, index)
 #define ARR_VAR(type, name) ARRNAME(type) name = INIT_ARRAY(type);
 
 
 #define STRUCTDEF(structName) typedef struct structName structName;
-
-typedef struct {
-    size_t size;
-    void* data;
-} Data;
-
-typedef struct {
-    size_t count;
-    Data* data;
-} ArrayData;
-
-Data* _getDataFromArrayData(ArrayData arr, unsigned index);
 
 #endif
