@@ -80,7 +80,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/test/Person.c">
+			<Option target="TangaraTest"/>
+		</Unit>
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/test/Person.h">
+			<Option target="TangaraTest"/>
+		</Unit>
 		<Unit filename="D:/GitHub/mino-lang/Tangara/src/test/main.c">
+			<Option target="TangaraTest"/>
+		</Unit>
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/test/std.c">
+			<Option target="TangaraTest"/>
+		</Unit>
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/test/std.h">
 			<Option target="TangaraTest"/>
 		</Unit>
 		<Unit filename="D:/GitHub/mino-lang/Tangara/src/CMakeLists.txt">

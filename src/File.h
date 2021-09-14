@@ -21,7 +21,7 @@ fwrite(arr, sizeof(ARRNAME(type)), 1, file); \
 }
 #define GEN_READARR(type) TANGARA_API inline void tgRead##type##Array(FILE* file, ARRNAME(type)* arr) \
 { \
-fwrite(arr, sizeof(ARRNAME(type)), 1, file); \
+fread(arr, sizeof(ARRNAME(type)), 1, file); \
 }
 #define WRITEARR(file, type, arr) tgWrite##type##Array(file, arr)
 #define READARR(file, type, arr) tgRead##type##Array(file, arr)
