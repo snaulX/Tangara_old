@@ -1,12 +1,6 @@
 #pragma once
 #ifndef INTERNAL
 
-#ifdef WIN32
-#define TANGARA_API __declspec(dllexport)
-#else
-#define TANGARA_API __attribute__((visibility("default")))
-#endif
-
 #define INTERNAL 0
 #define PUBLIC 1
 #define PRIVATE 2

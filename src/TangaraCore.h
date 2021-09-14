@@ -9,14 +9,14 @@
 extern "C" {  // only need to export C interface if used by C++ source code
 #endif
 
-typedef struct TgVar TgVar;
-typedef struct TgField TgField;
-typedef struct TgClass TgClass;
-typedef struct TgFunc TgFunc;
-typedef struct TgClassBlock TgClassBlock;
-typedef struct TgVarBlock TgVarBlock;
-typedef struct TgFieldBlock TgFieldBlock;
-typedef struct TgFuncBlock TgFuncBlock;
+STRUCTDEF(TgVar)
+STRUCTDEF(TgField)
+STRUCTDEF(TgClass)
+STRUCTDEF(TgFunc)
+STRUCTDEF(TgClassBlock)
+STRUCTDEF(TgVarBlock)
+STRUCTDEF(TgFieldBlock)
+STRUCTDEF(TgFuncBlock)
 
 struct TgClass {
     unsigned int visibility: 1;

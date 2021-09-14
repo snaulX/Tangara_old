@@ -170,6 +170,12 @@
 		<Unit filename="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h">
 			<Option target="Tangara"/>
 		</Unit>
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/base.c">
+			<Option target="Tangara"/>
+		</Unit>
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/base.h">
+			<Option target="Tangara"/>
+		</Unit>
 		<Unit filename="D:/GitHub/mino-lang/Tangara/src/test/main.c">
 			<Option target="TangaraTest"/>
 		</Unit>

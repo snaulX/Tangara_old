@@ -1,6 +1,8 @@
 #include "TangaraCore.h"
 #include "File.h"
 
+GEN_ARRAY(TgField)
+
 int main(void)
 {
     TgClass string = tgInitClass(PUBLIC, DEFAULT, STR("string"));
@@ -9,9 +11,14 @@ int main(void)
     TgFunc func = tgInitFunc(PUBLIC, DEFAULT, STR("func"), NULL, &params);
     TgClass main = tgInitClass(PUBLIC, DEFAULT, STR("Main"));
     TgFieldBlock fb = tgInitFieldBlock();
+    ARR_VAR(TgField, fields)
+    ADD(TgField, name, fields);
+    print(GET(TgField, 0, fields)->var.name);
     main.fields = &fb;
-    tgAddField(name, &fb /*main.fields*/);
-    //tgAddFunc(func, main.methods);
+    TgFuncBlock funcBlock = tgInitFuncBlock();
+    main.methods = &funcBlock;
+    tgAddField(name, &fb);
+    tgAddFunc(func, &funcBlock);
     TgClassBlock clb = tgInitClassBlock();
     tgAddClass(main, &clb);
     tgAddClass(string, &clb);

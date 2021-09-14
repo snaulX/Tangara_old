@@ -3,7 +3,7 @@ project(Tangara C)
 
 set(DYNAMIC false)
 set(CMAKE_C_STANDARD 99)
-set(SOURCES File.c TangaraCore.c)
+set(SOURCES File.c TangaraCore.c base.c)
 set(INCLUDE base.h constants.h File.h TangaraCore.h CodeBlock.h)
 
 include_directories(Tangara ${INCLUDE})

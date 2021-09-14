@@ -6,16 +6,6 @@
 #define CALL 0
 
 typedef struct {
-    size_t size;
-    void* data;
-} Data;
-
-typedef struct {
-    size_t count;
-    Data* data;
-} ArrayData;
-
-typedef struct {
     unsigned code;
     ArrayData args;
 } Command;
