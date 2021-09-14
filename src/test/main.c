@@ -1,4 +1,4 @@
-#include "Tangara.h"
+#include "TangaraCore.h"
 #include "File.h"
 
 int main(void)
@@ -14,11 +14,14 @@ int main(void)
     //tgAddFunc(func, main.methods);
     TgClassBlock clb = tgInitClassBlock();
     tgAddClass(main, &clb);
+    tgAddClass(string, &clb);
     print(clb.classes[0].name);
     FILE* file = tgOpenWrite("test.tgr");
     tgWriteClassBlock(file, &clb);
     tgCloseFile(file);
     file = tgOpenRead("test.tgr");
     tgReadClassBlock(file, &clb);
-    print(clb.classes[0].fields->fields[0].var.value);
+    printf("Class block contains:\n");
+    for (int i = 0; i < clb.count; i++)
+        wprintf(L"\tClass: %s\n", clb.classes[i].name);
 }

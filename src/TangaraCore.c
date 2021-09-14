@@ -1,4 +1,4 @@
-#include "Tangara.h"
+#include "TangaraCore.h"
 
 TgClassBlock tgInitClassBlock()
 {

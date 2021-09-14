@@ -28,7 +28,7 @@
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/base.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/constants.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/File.h"/>
-					<Add directory="D:/GitHub/mino-lang/Tangara/src/Tangara.h"/>
+					<Add directory="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/CodeBlock.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/TangaraTest"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/.."/>
@@ -59,7 +59,7 @@
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/base.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/constants.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/File.h"/>
-					<Add directory="D:/GitHub/mino-lang/Tangara/src/Tangara.h"/>
+					<Add directory="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/CodeBlock.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/TangaraTest"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/.."/>

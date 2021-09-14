@@ -4,7 +4,7 @@
 #ifdef WIN32
 #define TANGARA_API __declspec(dllexport)
 #else
-#define TANGARA_API __attribute__((visibility(""default"")))
+#define TANGARA_API __attribute__((visibility("default")))
 #endif
 
 #define INTERNAL 0

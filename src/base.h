@@ -23,12 +23,12 @@
     #define print(str) wprintf(L"%s\n", str)
 #elif defined(UNIX) && !defined(WIN32)
     typedef char char_t;
-    #define STR(str) ## str
+    #define STR(str) str
     #define CH(ch) ch
     #define print(str) printf("%s\n", str)
 #else
     typedef char char_t;
-    #define STR(str) ## str
+    #define STR(str) str
     #define CH(ch) ch
     #define print(str) printf("%s\n", str)
 #endif

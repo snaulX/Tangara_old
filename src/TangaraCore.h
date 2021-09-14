@@ -1,6 +1,6 @@
 #pragma once
-#ifndef TANGARA_H
-#define TANGARA_H
+#ifndef TANGARA_CORE_H
+#define TANGARA_CORE_H
 
 #include "base.h"
 #include "constants.h"

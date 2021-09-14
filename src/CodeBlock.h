@@ -1,7 +1,7 @@
 #ifndef TANGARA_CODEBLOCK_H
 #define TANGARA_CODEBLOCK_H
 
-#include "Tangara.h"
+#include "TangaraCore.h"
 
 #define CALL 0
 
@@ -28,7 +28,7 @@ typedef struct {
 struct StrData
 {
     size_t size;
-    char* str;
+    char_t* str;
 };
 
 union ConvStrData

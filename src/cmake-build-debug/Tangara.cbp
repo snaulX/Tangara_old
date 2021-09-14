@@ -28,7 +28,7 @@
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/base.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/constants.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/File.h"/>
-					<Add directory="D:/GitHub/mino-lang/Tangara/src/Tangara.h"/>
+					<Add directory="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/CodeBlock.h"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\ATLMFC\include"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include"/>
@@ -57,7 +57,7 @@
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/base.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/constants.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/File.h"/>
-					<Add directory="D:/GitHub/mino-lang/Tangara/src/Tangara.h"/>
+					<Add directory="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/CodeBlock.h"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\ATLMFC\include"/>
 					<Add directory="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include"/>
@@ -106,7 +106,7 @@
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/base.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/constants.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/File.h"/>
-					<Add directory="D:/GitHub/mino-lang/Tangara/src/Tangara.h"/>
+					<Add directory="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/CodeBlock.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/TangaraTest"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/.."/>
@@ -137,7 +137,7 @@
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/base.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/constants.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/File.h"/>
-					<Add directory="D:/GitHub/mino-lang/Tangara/src/Tangara.h"/>
+					<Add directory="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/CodeBlock.h"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/TangaraTest"/>
 					<Add directory="D:/GitHub/mino-lang/Tangara/src/test/.."/>
@@ -164,10 +164,10 @@
 		<Unit filename="D:/GitHub/mino-lang/Tangara/src/File.h">
 			<Option target="Tangara"/>
 		</Unit>
-		<Unit filename="D:/GitHub/mino-lang/Tangara/src/Tangara.c">
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/TangaraCore.c">
 			<Option target="Tangara"/>
 		</Unit>
-		<Unit filename="D:/GitHub/mino-lang/Tangara/src/Tangara.h">
+		<Unit filename="D:/GitHub/mino-lang/Tangara/src/TangaraCore.h">
 			<Option target="Tangara"/>
 		</Unit>
 		<Unit filename="D:/GitHub/mino-lang/Tangara/src/test/main.c">

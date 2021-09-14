@@ -2,7 +2,7 @@
 #ifndef TG_FILE_H
 #define TG_FILE_H
 
-#include "Tangara.h"
+#include "TangaraCore.h"
 #include <stdio.h>
 #include <stdlib.h>
 
