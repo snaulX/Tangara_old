@@ -2,8 +2,8 @@
 
 void init_std()
 {
-    TgClass str = tgInitClass(PUBLIC, DEFAULT, STR("string"));
+    TgClass str = tgInitClass(TG_VISIBILITY_PUBLIC, TG_MEMBTYPE_DEFAULT, STR("string"));
     strClass = &str;
-    TgClass _int = tgInitClass(PUBLIC, DEFAULT, STR("int"));
+    TgClass _int = tgInitClass(TG_VISIBILITY_PUBLIC, TG_MEMBTYPE_DEFAULT, STR("int"));
     intClass = &_int;
 }

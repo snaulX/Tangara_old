@@ -4,10 +4,11 @@
 int main(void)
 {
     init_std();
-    TgField name = tgInitField(PUBLIC, DEFAULT, STR("name"), strClass, STR("Alexander"));
+    printf("%u\n", sizeof(TgFunc));
+    TgField name = tgInitField(TG_VISIBILITY_PUBLIC, TG_MEMBTYPE_DEFAULT, STR("name"), strClass, STR("Alexander"));
     ARR_VAR(TgVar, params)
-    TgFunc func = tgInitFunc(PUBLIC, DEFAULT, STR("func"), NULL, &params);
-    TgClass main = tgInitClass(PUBLIC, DEFAULT, STR("Main"));
+    TgFunc func = tgInitFunc(TG_VISIBILITY_PUBLIC, TG_MEMBTYPE_DEFAULT, STR("func"), NULL, &params);
+    TgClass main = tgInitClass(TG_VISIBILITY_PUBLIC, TG_MEMBTYPE_DEFAULT, STR("Main"));
     ARR_VAR(TgField, fields)
     ADD(TgField, name, &fields);
     main.fields = &fields;
@@ -20,9 +21,19 @@ int main(void)
     FILE *file = tgOpenWrite("test.tgr");
     WRITEARR(file, TgClass, &classes);
     tgCloseFile(file);
-    classes = INIT_ARRAY(TgClass); // clear (re-init_std) our array
+    classes = INIT_ARRAY(TgClass); // clear (re-init) our array
     file = tgOpenRead("test.tgr");
     READARR(file, TgClass, &classes);
     for (int i = 0; i < classes.count; i++)
-        print(GET(TgClass, i, classes)->name);
+    {
+        TgClass *cl = GET(TgClass, i, classes);
+        print(cl->name);
+        if (cl->fields->count > 0)
+        {
+            for (int j = 0; j < cl->fields->count; j++)
+            {
+                print(GET(TgField, j, *cl->fields)->var.name);
+            }
+        }
+    }
 }

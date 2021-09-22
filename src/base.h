@@ -69,7 +69,7 @@ return arr; \
 
 #define GEN_ADD_METHOD(type) TANGARA_API inline void tgAdd##type(type data, ARRNAME(type)* arr) \
 { \
-arr->data = realloc(arr->data, ++arr->count * sizeof(data)); \
+arr->data = (type*)realloc(arr->data, ++arr->count * sizeof(data)); \
 arr->data[arr->count - 1] = data; \
 }
 
