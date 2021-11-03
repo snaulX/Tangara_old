@@ -1,6 +1,22 @@
 #pragma once
 #ifndef TG_VISIBILITY_INTERNAL
 
+typedef enum {
+    Public,
+    Internal,
+    Private,
+    Protected,
+    ProtectedInternal
+} TgVisibility;
+
+typedef enum {
+    Default,
+    Static,
+    Abstract,
+    Native,
+    Final
+} TgMembtype;
+
 #define TG_VISIBILITY_INTERNAL 0
 #define TG_VISIBILITY_PUBLIC 1
 #define TG_VISIBILITY_PRIVATE 2

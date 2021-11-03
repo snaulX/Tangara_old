@@ -64,4 +64,4 @@ TANGARA_API TgFunc tgInitFunc(unsigned visibility, unsigned func_type, char_t *n
 }
 #endif
 
-#endif
+#endif // TANGARA_CORE_H

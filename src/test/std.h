@@ -3,8 +3,8 @@
 
 #include "TangaraCore.h"
 
-TgClass* strClass;
-TgClass* intClass;
+static TgClass* strClass;
+static TgClass* intClass;
 
 void init_std();
 

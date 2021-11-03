@@ -28,7 +28,7 @@
     #define CH(ch) L ch
     #define print(str) wprintf(L"%s\n", str)
 #elif defined(UNIX) && !defined(WIN32)
-    typedef char char_t;
+    typedef unsigned short char_t;
     #define STR(str) str
     #define CH(ch) ch
     #define print(str) printf("%s\n", str)
@@ -39,8 +39,10 @@
     #define print(str) printf("%s\n", str)
 #endif
 
+//typedef const char_t* string;
+
 typedef struct {
-    char_t *message;
+    const char_t *message;
 } err_info;
 
 struct {

@@ -4,7 +4,7 @@
 int main(void)
 {
     init_std();
-    printf("%u\n", sizeof(TgFunc));
+    printf("%u\n", sizeof(TgVisibility));
     TgField name = tgInitField(TG_VISIBILITY_PUBLIC, TG_MEMBTYPE_DEFAULT, STR("name"), strClass, STR("Alexander"));
     ARR_VAR(TgVar, params)
     TgFunc func = tgInitFunc(TG_VISIBILITY_PUBLIC, TG_MEMBTYPE_DEFAULT, STR("func"), NULL, &params);

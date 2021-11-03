@@ -33,4 +33,4 @@ GEN_READARR(TgClass)
 }
 #endif
 
-#endif
+#endif // TG_FILE_H
