@@ -99,4 +99,6 @@ return &arr.data[index]; \
 
 #define STRUCTDEF(structName) typedef struct structName structName;
 
+typedef unsigned int uint;
+
 #endif

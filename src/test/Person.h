@@ -3,6 +3,6 @@
 
 #include "std.h"
 
-TgClass *createPersonClass();
+TgClass createPersonClass();
 
 #endif //TANGARA_PERSON_H

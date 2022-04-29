@@ -13,7 +13,7 @@ int main(void)
     ADD(TgField, name, &fields);
     main.fields = &fields;
     ARR_VAR(TgClass, classes)
-    TgClass person = *createPersonClass();
+    TgClass person = createPersonClass();
     ADD(TgClass, main, &classes);
     //ADD(TgClass, *strClass, &classes);
     //ADD(TgClass, *intClass, &classes);
