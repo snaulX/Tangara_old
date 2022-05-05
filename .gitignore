@@ -10,10 +10,9 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .vs/*
-Tangara/out/*
 *.exe
 *.lib
 *.exp
 *.ilk
 *.pdb
-src/cmake-build-debug/*
+build/
