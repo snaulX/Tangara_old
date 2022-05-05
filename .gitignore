@@ -15,4 +15,5 @@ _deps
 *.exp
 *.ilk
 *.pdb
-build/
+[Bb]uild/*
+.idea/*
