@@ -1,24 +1,20 @@
 #ifndef TANGARA_CLASS_HPP
 #define TANGARA_CLASS_HPP
-#include <string>
-#include <utility>
+#include "Type.hpp"
+#include "Method.hpp"
 
 namespace Tangara {
 
-    class Class {
+    class Class : public Type {
     public:
         Class();
 
         ~Class();
 
-        void SetName(std::string _name) { name = std::move(_name); }
-        [[nodiscard]] std::string GetName() const { return name; }
-
-        void SetNameSpace(std::string nameSpace) { _namespace = std::move(nameSpace); }
-        [[nodiscard]] std::string GetNameSpace() const { return _namespace; }
+        Method* CreateMethod(const char* name);
+        Method* GetMethod(const std::string& name);
     private:
-        std::string name;
-        std::string _namespace;
+        std::vector<Method*> methods;
     };
 
 } // Tangara

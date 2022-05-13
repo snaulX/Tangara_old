@@ -1,6 +1,6 @@
-
 #ifndef TANGARA_FUNCTION_HPP
 #define TANGARA_FUNCTION_HPP
+#include <string>
 
 namespace Tangara {
 
@@ -10,7 +10,8 @@ namespace Tangara {
 
         ~Function();
 
-    private:
+    protected:
+        std::string name;
     };
 
 } // Tangara
