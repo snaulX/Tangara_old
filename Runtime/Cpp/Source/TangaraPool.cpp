@@ -14,7 +14,3 @@ void TangaraPool::CreateInterface(const char *name) {
 void TangaraPool::CreateClass(const char *name) {
 
 }
-
-static Tangara::Entry* Tangara::Runtime::Cpp::GetEntry() {
-    return TangaraPool::Instance->GetEntry();
-}

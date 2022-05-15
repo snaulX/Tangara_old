@@ -8,8 +8,4 @@
 #define TANGARA_METHOD(MethodName)
 #define TANGARA_END()
 
-namespace Tangara::Runtime::Cpp {
-    static Tangara::Entry* GetEntry();
-}
-
 #endif //TANGARA_TANGARADEFINES_HPP
