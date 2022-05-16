@@ -86,29 +86,37 @@ class MyClass {
 public:
     MyClass() = default;
 
-    char* GetName(char* name) { return name; }
+    char* GetName(char* name) {
+        char* new_name = (char*)(malloc(sizeof(name) + 5));
+        memcpy(new_name, "Hey ", 4);
+        strcpy(new_name + 4,  name);
+        return new_name;
+    }
     void PrintInt(int a) { std::cout << a + numb << std::endl; }
     void SetNumb(int n) { numb = n; }
 
 private:
     int numb = 0;
 };
-
 static CreateClass createClass_MyClass("MyClass");
+
 extern "C" TgObj* tg_MyClass_ctor0(TgObj* params[])
 {
     return TgPtr((void *) new MyClass());
 }
 static CreateCtor createCtor_MyClass0(tg_MyClass_ctor0);
+
 extern "C" TgObj* tg_MyClass_GetName(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     char* arg0 = static_cast<char *>(malloc(params[0]->size));
     memcpy(arg0, params[0]->data, params[0]->size);
-    auto* tgObj = TgPtr((void *) cppObj->GetName(arg0));
+    auto* tgObj = TgPtr(cppObj->GetName(arg0));
     free(arg0);
+    char* str = (char*)tgObj->data;
     return tgObj;
 }
 static CreateMethod createMethod_MyClass_GetName("GetName", tg_MyClass_GetName);
+
 extern "C" TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
@@ -116,6 +124,7 @@ extern "C" TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
     return TgPtr(nullptr);
 }
 static CreateMethod createMethod_MyClass_PrintInt("PrintInt", tg_MyClass_PrintInt);
+
 extern "C" TgObj* tg_MyClass_SetNumb(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
