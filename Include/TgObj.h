@@ -2,23 +2,36 @@
 #define TANGARA_TGOBJ_H
 #include "TangaraBase.h"
 
-#ifdef _cplusplus
+#ifdef __cplusplus
+#include <cstdint>
 extern "C" {
+#else
+#include <stdint.h>
 #endif
 typedef struct _TgObj {
-    const char* type_name;
+    uint32_t type_hash;
     void *data;
     size_t size;
 } TgObj;
-TANGARA_API TgObj *TgPtr(void *data, const char* type_name);
+typedef struct _TgParams {
+    int length;
+    TgObj** params;
+} TgParams;
+typedef struct _TgParamTypes {
+    int length;
+    uint32_t* types;
+    char** names;
+} TgParamTypes;
+
+TANGARA_API TgObj *TgPtr(void *data, uint32_t type_hash);
+TANGARA_API TgObj *TgNull();
 TANGARA_API TgObj *TgInt(int data);
 TANGARA_API TgObj *TgFloat(float data);
 TANGARA_API void TgDestroy(TgObj *tgObj);
 
-
 typedef TgObj*(TgMethodDelegate)(void*, TgObj**);
 typedef TgObj*(TgCtorDelegate)(TgObj**);
-#ifdef _cplusplus
+#ifdef __cplusplus
 }
 #endif
 

@@ -24,15 +24,15 @@ static CreateClass createClass_MyClass("MyClass");
 
 extern "C" TgObj* tg_MyClass_ctor0(TgObj* params[])
 {
-    return TgPtr((void *) new MyClass(), "MyClass");
+    return TgPtr((void *) new MyClass(), TgGetClassHash("MyClass"));
 }
-static CreateCtor createCtor_MyClass0(tg_MyClass_ctor0);
+static CreateCtor createCtor_MyClass0(tg_MyClass_ctor0, {}, {}, 0);
 
 extern "C" TgObj* tg_MyClass_GetName(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     char* arg0 = static_cast<char *>(malloc(params[0]->size));
     memcpy(arg0, params[0]->data, params[0]->size);
-    auto* tgObj = TgPtr(cppObj->GetName(arg0), "cstring");
+    auto* tgObj = TgPtr(cppObj->GetName(arg0), TgGetClassHash("cstring"));
     free(arg0);
     char* str = (char*)tgObj->data;
     return tgObj;
@@ -43,7 +43,7 @@ extern "C" TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
     cppObj->PrintInt(arg0);
-    return TgPtr(nullptr, "void");
+    return TgNull();
 }
 static CreateMethod createMethod_MyClass_PrintInt("PrintInt", tg_MyClass_PrintInt);
 
@@ -51,7 +51,7 @@ extern "C" TgObj* tg_MyClass_SetNumb(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
     cppObj->SetNumb(arg0);
-    return TgPtr(nullptr, "void");
+    return TgNull();
 }
 static CreateMethod createMethod_MyClass_SetNumb("SetNumb", tg_MyClass_SetNumb);
 
@@ -61,17 +61,17 @@ void* GetClass(void* entry, const char* name) {
     return nullptr;
 }
 void* GetMethod(void* cl, const char* name) {
-    auto* ptr = (TgClass*)cl;
+    auto* ptr = (Class*)cl;
     for (auto* method : ptr->methods) {
         if (strcmp(method->name, name) == 0) return method;
     }
     return nullptr;
 }
-TgObj* CreateObject(void* cl, TgObj* params[]) {
-    return ((TgClass*)cl)->ctor->delegate(params);
+TgObj* CreateObject(void* cl, const TgParams &params) {
+    return ((Class*)cl)->ctor->delegate(params);
 }
-TgObj* RunMethod(TgObj* obj, void* method, TgObj* params[]) {
-    return ((TgMethod*)method)->delegate(obj, params);
+TgObj* RunMethod(TgObj* obj, void* method, const TgParams &params) {
+    return ((Method*)method)->delegate(obj, params);
 }
 
 int main()

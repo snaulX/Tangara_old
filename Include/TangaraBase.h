@@ -11,4 +11,6 @@
 #    define TANGARA_API
 #endif
 
+static const uint32_t TG_HASH_SEED = 0;
+
 #endif //TANGARA_TANGARABASE_H
