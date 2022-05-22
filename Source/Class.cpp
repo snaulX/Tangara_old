@@ -1,15 +1,12 @@
 #include "Class.hpp"
 
 namespace Tangara {
-    Class::Class() = default;
+    Class::Class(const char *_name) : name(_name), ctors() { }
+
+    TgObj *Class::New(TgObj **params) {
+        // TODO: Parameters type checking
+        return ctors[0]->Run(params);
+    }
 
     Class::~Class() = default;
-
-    Method *Class::CreateMethod(const char *name) {
-        return nullptr;
-    }
-
-    Method *Class::GetMethod(const std::string& name) {
-        return nullptr;
-    }
 }

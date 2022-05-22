@@ -3,7 +3,7 @@ project(Tangara.Runtime.Cpp CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(SOURCES Source/CreateInterface.cpp Source/CreateInterface.hpp Source/TangaraPool.cpp Source/TangaraPool.hpp Source/CreateClass.cpp Source/CreateClass.hpp)
+set(SOURCES Source/RuntimeCpp.cpp)
 
 add_library(Tangara.Runtime.Cpp STATIC ${SOURCES})
 

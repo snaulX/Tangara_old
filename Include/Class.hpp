@@ -1,20 +1,24 @@
 #ifndef TANGARA_CLASS_HPP
 #define TANGARA_CLASS_HPP
-#include "Type.hpp"
-#include "Method.hpp"
+
+#include <vector>
+#include "Constructor.hpp"
 
 namespace Tangara {
 
-    class Class : public Type {
+    class Class {
     public:
-        Class();
+        explicit Class(const char *_name);
 
         ~Class();
 
-        Method* CreateMethod(const char* name);
-        Method* GetMethod(const std::string& name);
+        void AddConstructor(Constructor* ctor) { ctors.push_back(ctor); }
+        TgObj* New(TgObj* params[]);
+
+        [[nodiscard]] const char* GetName() const { return name; }
     private:
-        std::vector<Method*> methods;
+        const char* name;
+        std::vector<Constructor*> ctors;
     };
 
 } // Tangara

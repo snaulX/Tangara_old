@@ -1,86 +1,8 @@
 #include <iostream>
 #include <vector>
+#include "RuntimeCpp.hpp"
 
-extern "C" {
-struct TgObj {
-    void *data;
-    size_t size;
-};
-TgObj *TgPtr(void *data) {
-    auto *tgObj = (TgObj *) malloc(sizeof(TgObj));
-    tgObj->data = data;
-    tgObj->size = sizeof(data);
-    return tgObj;
-}
-TgObj *TgInt(int data) {
-    int *dataPtr = (int *) malloc(sizeof(int));
-    *dataPtr = data;
-    auto *tgObj = (TgObj *) malloc(sizeof(TgObj));
-    tgObj->data = dataPtr;
-    tgObj->size = sizeof(int);
-    return tgObj;
-}
-void TgDestroy(TgObj *tgObj) {
-    free(tgObj->data);
-    free(tgObj);
-}
-}
-
-typedef TgObj*(TgMethodDelegate)(void*, TgObj**);
-typedef TgObj*(TgCtorDelegate)(TgObj**);
-struct TgCtor {
-    TgCtorDelegate* delegate;
-};
-struct TgMethod {
-    const char* name;
-    TgMethodDelegate* delegate;
-};
-struct TgClass {
-    const char* name;
-    TgCtor* ctor;
-    std::vector<TgMethod*> methods;
-};
-static std::vector<TgClass*> classes;
-static TgClass* currentClass;
-void* TgCreateClass(const char* name) {
-    auto* cl = new TgClass();
-    cl->name = name;
-    classes.push_back(cl);
-    return cl;
-}
-void TgSetCurrentType(void* typeHandle) {
-    currentClass = static_cast<TgClass *>(typeHandle);
-}
-void TgCreateMethod(const char* name, TgMethodDelegate delegate) {
-    auto* method = new TgMethod();
-    method->name = name;
-    method->delegate = delegate;
-    currentClass->methods.push_back(method);
-}
-void TgCreateCtor(TgCtorDelegate delegate) {
-    auto* ctor = new TgCtor();
-    ctor->delegate = delegate;
-    currentClass->ctor = ctor;
-}
-class CreateClass {
-public:
-    explicit CreateClass(const char* name) {
-        auto* handle = TgCreateClass(name);
-        TgSetCurrentType(handle);
-    }
-};
-class CreateCtor {
-public:
-    explicit CreateCtor(TgCtorDelegate ctor) {
-        TgCreateCtor(ctor);
-    }
-};
-class CreateMethod {
-public:
-    explicit CreateMethod(const char* name, TgMethodDelegate method) {
-        TgCreateMethod(name, method);
-    }
-};
+using namespace Tangara::Runtime::Cpp;
 
 class MyClass {
 public:
@@ -92,7 +14,7 @@ public:
         strcpy(new_name + 4,  name);
         return new_name;
     }
-    void PrintInt(int a) { std::cout << a + numb << std::endl; }
+    void PrintInt(int a) const { std::cout << a + numb << std::endl; }
     void SetNumb(int n) { numb = n; }
 
 private:
@@ -102,7 +24,7 @@ static CreateClass createClass_MyClass("MyClass");
 
 extern "C" TgObj* tg_MyClass_ctor0(TgObj* params[])
 {
-    return TgPtr((void *) new MyClass());
+    return TgPtr((void *) new MyClass(), "MyClass");
 }
 static CreateCtor createCtor_MyClass0(tg_MyClass_ctor0);
 
@@ -110,7 +32,7 @@ extern "C" TgObj* tg_MyClass_GetName(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     char* arg0 = static_cast<char *>(malloc(params[0]->size));
     memcpy(arg0, params[0]->data, params[0]->size);
-    auto* tgObj = TgPtr(cppObj->GetName(arg0));
+    auto* tgObj = TgPtr(cppObj->GetName(arg0), "cstring");
     free(arg0);
     char* str = (char*)tgObj->data;
     return tgObj;
@@ -121,7 +43,7 @@ extern "C" TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
     cppObj->PrintInt(arg0);
-    return TgPtr(nullptr);
+    return TgPtr(nullptr, "void");
 }
 static CreateMethod createMethod_MyClass_PrintInt("PrintInt", tg_MyClass_PrintInt);
 
@@ -129,16 +51,13 @@ extern "C" TgObj* tg_MyClass_SetNumb(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
     cppObj->SetNumb(arg0);
-    return TgPtr(nullptr);
+    return TgPtr(nullptr, "void");
 }
 static CreateMethod createMethod_MyClass_SetNumb("SetNumb", tg_MyClass_SetNumb);
 
 void* DllLoad(const char* name) { return nullptr; }
 void* GetEntry(void* dll, const char* name) { return nullptr; }
 void* GetClass(void* entry, const char* name) {
-    for (auto* cl : classes) {
-        if (strcmp(cl->name, name) == 0) return cl;
-    }
     return nullptr;
 }
 void* GetMethod(void* cl, const char* name) {
@@ -163,7 +82,7 @@ int main()
     auto obj = CreateObject(MyClass, nullptr);
 
     auto GetName = GetMethod(MyClass, "GetName");
-    TgObj* params[] = {TgPtr((void *) "kek")};
+    TgObj* params[] = {TgPtr((void *) "kek", "cstring")};
     auto name = (char*)RunMethod(obj, GetName, params)->data;
     std::cout << name << std::endl;
 
