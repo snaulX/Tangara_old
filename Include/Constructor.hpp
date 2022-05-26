@@ -12,7 +12,11 @@ namespace Tangara {
 
         ~Constructor();
 
+        /// Runs constructor checking given parameters
+        /// Throws exception if parameters doesn't match
         TgObj* RunSafe(const TgParams &params);
+        /// Runs constructor without checking given parameters
+        /// Use only when you know that params matches constructor's
         TgObj* Run(const TgParams &params);
     private:
         TgCtorDelegate* delegate;

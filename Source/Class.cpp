@@ -1,8 +1,7 @@
 #include "Class.hpp"
 
 namespace Tangara {
-    Class::Class(const char *_name) : name(_name), ctors()
-    , hashcode(XXHash32::hash(this, sizeof(Class), TG_HASH_SEED))
+    Class::Class(const char *_name) : name(_name), hashcode(XXHash32::hash(this, sizeof(Class), TG_HASH_SEED))
     { }
 
     TgObj *Class::New(const TgParams &params) {
