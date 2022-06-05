@@ -13,4 +13,11 @@ namespace Tangara {
                 throw std::exception("Parameter type doesn't equals constructor parameter type");
         }
     }
+
+    TgParams EmptyParams() {
+        return {
+            .length = 0,
+            .params = nullptr
+        };
+    }
 }

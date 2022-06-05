@@ -8,7 +8,7 @@ namespace Tangara {
 
     class Constructor {
     public:
-        explicit Constructor(TgCtorDelegate *delegate, const TgParamTypes& paramTypes);
+        explicit Constructor(TgFuncDelegate *delegate, const TgParamTypes& paramTypes);
 
         ~Constructor();
 
@@ -19,7 +19,7 @@ namespace Tangara {
         /// Use only when you know that params matches constructor's
         TgObj* Run(const TgParams &params);
     private:
-        TgCtorDelegate* delegate;
+        TgFuncDelegate* delegate;
         TgParamTypes paramTypes;
     };
 

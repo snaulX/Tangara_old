@@ -2,7 +2,7 @@
 #include "Utils.hpp"
 
 namespace Tangara {
-    Constructor::Constructor(TgCtorDelegate *delegate, const TgParamTypes& paramTypes)
+    Constructor::Constructor(TgFuncDelegate *delegate, const TgParamTypes& paramTypes)
     : delegate(delegate), paramTypes(paramTypes) { }
 
     TgObj *Constructor::RunSafe(const TgParams &params) {

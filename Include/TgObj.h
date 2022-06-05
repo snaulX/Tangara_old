@@ -24,13 +24,10 @@ typedef struct _TgParamTypes {
 } TgParamTypes;
 
 TANGARA_API TgObj *TgPtr(void *data, uint32_t type_hash);
-TANGARA_API TgObj *TgNull();
-TANGARA_API TgObj *TgInt(int data);
-TANGARA_API TgObj *TgFloat(float data);
 TANGARA_API void TgDestroy(TgObj *tgObj);
 
 typedef TgObj*(TgMethodDelegate)(void*, TgObj**);
-typedef TgObj*(TgCtorDelegate)(TgObj**);
+typedef TgObj*(TgFuncDelegate)(TgObj**);
 #ifdef __cplusplus
 }
 #endif

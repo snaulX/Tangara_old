@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "RuntimeCpp.hpp"
+#include "Utils.hpp"
+#include "TgStd.h"
 
 using namespace Tangara::Runtime::Cpp;
 
@@ -79,10 +81,10 @@ int main()
     auto dll = DllLoad("EnigmaLabs");
     auto entry = GetEntry(dll, "EnigmaLabs");
     auto MyClass = GetClass(entry, "MyClass");
-    auto obj = CreateObject(MyClass, nullptr);
+    auto obj = CreateObject(MyClass, Tangara::EmptyParams());
 
     auto GetName = GetMethod(MyClass, "GetName");
-    TgObj* params[] = {TgPtr((void *) "kek", "cstring")};
+    TgObj* params[] = {TgPtr((void *) "kek", TgCStrHash())};
     auto name = (char*)RunMethod(obj, GetName, params)->data;
     std::cout << name << std::endl;
 

@@ -12,7 +12,7 @@ namespace Tangara::Runtime::Cpp {
     Class* TgCreateClass(const char* name);
     void TgSetCurrentType(Class *typeHandle);
     void TgCreateMethod(const char* name, TgMethodDelegate delegate);
-    void TgCreateCtor(TgCtorDelegate delegate, char** typeNames, char** paramNames, int length);
+    void TgCreateCtor(TgFuncDelegate delegate, char** typeNames, char** paramNames, int length);
 
     class CreateClass {
     public:
@@ -23,7 +23,7 @@ namespace Tangara::Runtime::Cpp {
     };
     class CreateCtor {
     public:
-        explicit CreateCtor(TgCtorDelegate ctor, char** typeNames, char** paramNames, int length) {
+        explicit CreateCtor(TgFuncDelegate ctor, char** typeNames, char** paramNames, int length) {
             TgCreateCtor(ctor, typeNames, paramNames, length);
         }
     };

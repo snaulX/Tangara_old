@@ -31,7 +31,7 @@ namespace Tangara::Runtime::Cpp {
         currentClass->methods.push_back(method);
     }
 
-    void TgCreateCtor(TgCtorDelegate delegate, char** typeNames, char** paramNames, int length) {
+    void TgCreateCtor(TgFuncDelegate delegate, char** typeNames, char** paramNames, int length) {
         auto* hashes = new uint32_t[length];
         for (int i = 0; i < length; i++) {
             hashes[i] = TgGetClassHash(typeNames[i]);

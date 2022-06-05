@@ -9,6 +9,10 @@ namespace Tangara {
         for (Class* cl : classes) {
             if (strcmp(cl->GetName(), name) == 0) return cl;
         }
+        for (Entry* e : links) {
+            Class *clInLink = e->GetClass(name);
+            if (clInLink != nullptr) return clInLink;
+        }
         return nullptr;
     }
 }

@@ -6,7 +6,8 @@ set(TANGARA_DLL OFF CACHE BOOL "Builds shared library")
 set(TANGARA_CPP ON CACHE BOOL "Builds Tangara.Runtime.Cpp module")
 set(TANGARA_TEST ON CACHE BOOL "Builds test")
 
-set(SOURCES Source/TgObj.cpp Source/Class.cpp Source/Constructor.cpp Source/Entry.cpp Source/Method.cpp Source/Utils.cpp)
+set(SOURCES Source/TgObj.cpp Source/Class.cpp Source/Constructor.cpp Source/Entry.cpp Source/Method.cpp Source/Utils.cpp
+        Source/Std/TgStd.cpp)
 
 if (TANGARA_DLL)
     add_library(Tangara SHARED ${SOURCES})
