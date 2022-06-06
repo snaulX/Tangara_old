@@ -4,7 +4,10 @@
 #include "Utils.hpp"
 #include "TgStd.h"
 
+// Lib code
 using namespace Tangara::Runtime::Cpp;
+
+static CreateEntry createEntry_EnigmaLabs("EnigmaLabs");
 
 class MyClass {
 public:
@@ -39,7 +42,15 @@ extern "C" TgObj* tg_MyClass_GetName(void* obj, TgObj* params[]) {
     char* str = (char*)tgObj->data;
     return tgObj;
 }
-static CreateMethod createMethod_MyClass_GetName("GetName", tg_MyClass_GetName);
+static CreateMethod createMethod_MyClass_GetName("GetName", tg_MyClass_GetName, {
+    .length = 1,
+    .types = {
+            TgCStrHash()
+    },
+    .names = {
+            "name"
+    }
+});
 
 extern "C" TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
@@ -57,27 +68,31 @@ extern "C" TgObj* tg_MyClass_SetNumb(void* obj, TgObj* params[]) {
 }
 static CreateMethod createMethod_MyClass_SetNumb("SetNumb", tg_MyClass_SetNumb);
 
+// Main code
+using namespace Tangara;
+
 void* DllLoad(const char* name) { return nullptr; }
 void* GetEntry(void* dll, const char* name) { return nullptr; }
 void* GetClass(void* entry, const char* name) {
-    return nullptr;
+    return ((Entry*)entry)->GetClass(name);
 }
 void* GetMethod(void* cl, const char* name) {
-    auto* ptr = (Class*)cl;
-    for (auto* method : ptr->methods) {
-        if (strcmp(method->name, name) == 0) return method;
-    }
-    return nullptr;
+    return ((Class*)cl)->GetMethod(name);
 }
 TgObj* CreateObject(void* cl, const TgParams &params) {
-    return ((Class*)cl)->ctor->delegate(params);
+    return ((Class*)cl)->New(params);
 }
 TgObj* RunMethod(TgObj* obj, void* method, const TgParams &params) {
-    return ((Method*)method)->delegate(obj, params);
+    return ((Method*)method)->RunSafe(obj, params);
 }
 
 int main()
 {
+    // EnigmaLabs code
+    auto* std = static_cast<Entry *>(TgStdInit());
+
+
+    // Main code
     auto dll = DllLoad("EnigmaLabs");
     auto entry = GetEntry(dll, "EnigmaLabs");
     auto MyClass = GetClass(entry, "MyClass");
@@ -85,16 +100,25 @@ int main()
 
     auto GetName = GetMethod(MyClass, "GetName");
     TgObj* params[] = {TgPtr((void *) "kek", TgCStrHash())};
-    auto name = (char*)RunMethod(obj, GetName, params)->data;
+    auto name = (char*)RunMethod(obj, GetName, {
+        .length = 1,
+        .params = params
+    })->data;
     std::cout << name << std::endl;
 
     auto SetNumb = GetMethod(MyClass, "SetNumb");
     TgObj* numbParams[] = {TgInt(10)};
-    RunMethod(obj, SetNumb, numbParams);
+    RunMethod(obj, SetNumb, {
+        .length = 1,
+        .params = numbParams
+    });
 
     auto PrintInt = GetMethod(MyClass, "PrintInt");
     TgObj* intParams[] = {TgInt(5)};
-    RunMethod(obj, PrintInt, intParams);
+    RunMethod(obj, PrintInt, {
+        .length = 1,
+        .params = intParams
+    });
     free(obj);
     //TgDestroy(obj);
 }

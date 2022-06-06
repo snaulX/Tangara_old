@@ -2,7 +2,6 @@
 #define TANGARA_CLASS_HPP
 
 #include <vector>
-#include "xxhash/xxhash32.h"
 #include "Constructor.hpp"
 #include "Method.hpp"
 
@@ -25,6 +24,9 @@ namespace Tangara {
 
         [[nodiscard]] const char* GetName() const { return name; }
         [[nodiscard]] uint32_t GetHashCode() const { return hashcode; }
+
+        [[nodiscard]] Method* GetMethod(const char* name);
+        [[nodiscard]] Constructor* GetConstructor(const TgParamTypes& paramTypes);
     private:
         const char* name;
         std::vector<Constructor*> ctors{};

@@ -36,6 +36,7 @@ extern "C" {
 #endif
 
 TANGARA_API void *TgStdInit();
+TANGARA_API void *TgStdEntry();
 
 TANGARA_API TgObj *TgNull();
 TANGARA_API TgObj *TgInt(int data);

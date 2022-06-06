@@ -10,15 +10,19 @@ namespace Tangara::Runtime::Cpp {
     Entry* TgCreateEntry(const char* name);
     uint32_t TgGetClassHash(const char* name);
     Class* TgCreateClass(const char* name);
-    void TgSetCurrentType(Class *typeHandle);
-    void TgCreateMethod(const char* name, TgMethodDelegate delegate);
+    void TgCreateMethod(const char* name, TgMethodDelegate delegate, const TgParamTypes& paramTypes);
     void TgCreateCtor(TgFuncDelegate delegate, char** typeNames, char** paramNames, int length);
 
+    class CreateEntry {
+    public:
+        explicit CreateEntry(const char* name) {
+            TgCreateEntry(name);
+        }
+    };
     class CreateClass {
     public:
         explicit CreateClass(const char* name) {
             auto* handle = TgCreateClass(name);
-            TgSetCurrentType(handle);
         }
     };
     class CreateCtor {
@@ -29,8 +33,8 @@ namespace Tangara::Runtime::Cpp {
     };
     class CreateMethod {
     public:
-        explicit CreateMethod(const char* name, TgMethodDelegate method) {
-            TgCreateMethod(name, method);
+        explicit CreateMethod(const char* name, TgMethodDelegate method, const TgParamTypes& paramTypes) {
+            TgCreateMethod(name, method, paramTypes);
         }
     };
 }

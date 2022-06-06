@@ -20,4 +20,15 @@ namespace Tangara {
             .params = nullptr
         };
     }
+
+    bool operator==(const TgParamTypes& left, const TgParamTypes& right) {
+        if (left.length == right.length) {
+            for (int i = 0; i < left.length; i++) {
+                if (left.types[i] != right.types[i])
+                    return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }

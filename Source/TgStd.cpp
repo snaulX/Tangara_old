@@ -44,6 +44,10 @@ void *TgStdInit() {
     return StdEntry;
 }
 
+void *TgStdEntry() {
+    return StdEntry;
+}
+
 TgObj *TgNull() {
     return TgPtr(nullptr, VoidClass->GetHashCode());
 }

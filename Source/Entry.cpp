@@ -1,7 +1,9 @@
 #include "Entry.hpp"
+#include "xxhash/xxhash32.h"
 
 namespace Tangara {
-    Entry::Entry(const char* name) : name(name) { }
+    Entry::Entry(const char* name) : name(name), hashcode(XXHash32::hash(this, sizeof(Entry), TG_HASH_SEED))
+    { }
 
     Entry::~Entry() = default;
 
@@ -14,5 +16,23 @@ namespace Tangara {
             if (clInLink != nullptr) return clInLink;
         }
         return nullptr;
+    }
+
+    void Entry::AddClass(Class *cl) {
+        for (Class* c : classes) {
+            // Check this class if it exists in this entry already
+            if (c == cl) return;
+        }
+        classes.push_back(cl);
+    }
+
+    void Entry::LinkEntry(Entry *e) {
+        uint32_t eHash = e->hashcode;
+        if (hashcode == eHash)
+            return;
+        for (Entry* link : links) {
+            if (link->hashcode == eHash) return;
+        }
+        links.push_back(e);
     }
 }

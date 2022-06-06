@@ -11,16 +11,24 @@ namespace Tangara {
 
         ~Entry();
 
-        void AddClass(Class* cl) { classes.push_back(cl); }
-        void LinkEntry(Entry* e) { links.push_back(e); }
+        void AddClass(Class* cl);
+        void LinkEntry(Entry* e);
 
         Class* GetClass(const char* name);
+
+        [[nodiscard]] const char* GetName() const { return name; }
+        [[nodiscard]] uint32_t GetHashCode() const { return hashcode; }
     private:
         const char* name;
+        uint32_t hashcode;
+
         std::vector<Class*> classes;
         std::vector<Entry*> links;
     };
 
+    inline bool operator==(const Entry& left, const Entry& right) {
+        return left.GetHashCode() == right.GetHashCode();
+    }
 } // Tangara
 
 #endif //TANGARA_ENTRY_HPP
