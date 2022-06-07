@@ -3,7 +3,7 @@
         {
             "name": "EnigmaLabs",
             "includes": [
-                "MyClass.hpp"
+                "Snaulx.hpp"
             ],
             "classes": [
                 {
@@ -38,6 +38,31 @@
                     "constructors": [
                         {
                             "params": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Snaulx",
+                    "methods": [
+                        {
+                            "name": "PrintName",
+                            "params": [
+                                {
+                                    "name": "cl",
+                                    "type": "EnigmaLabs.MyClass*"
+                                }
+                            ],
+                            "returnType": "void"
+                        }
+                    ],
+                    "constructors": [
+                        {
+                            "params": [
+                                {
+                                    "name": "name",
+                                    "type": "char*"
+                                }
+                            ]
                         }
                     ]
                 }

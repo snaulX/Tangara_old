@@ -4,12 +4,15 @@ import json
 mainCode = []
 funcsCode = []
 
+def fixNamespaces(type):
+    return '::'.join(type.split('.'))
+
 
 def genParamsFuncCode(params):
     listParams = []
     for i in range(len(params)):
         param = params[i]
-        type = param['type'].strip()
+        type = fixNamespaces(param['type'].strip())
         name = 'arg_{}'.format(param['name'].strip())
         if type.endswith('*'):
             funcsCode.append('\t{} {} = static_cast<{}>(malloc(params[{}]->size));'.format(type, name, type, i))
@@ -74,7 +77,7 @@ for entry in entries:
             params = method['params']
             funcsCode.append('extern "C" TgObj* {}(void* obj, TgObj* params[])\n{{'.format(mVarName))
             funcsCode.append('\tauto* cppObj = static_cast<{}*>(obj);'.format(clCppName))
-            returnType = method['returnType'].strip()
+            returnType = fixNamespaces(method['returnType'].strip())
             if returnType == 'void':
                 funcsCode.append('\tcppObj->{}({});'.format(methodName, genParamsFuncCode(params)))
                 funcsCode.append('\treturn TgNull();')

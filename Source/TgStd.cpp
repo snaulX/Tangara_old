@@ -5,6 +5,8 @@ using namespace Tangara;
 namespace Tangara::Std {
     static Entry* StdEntry;
 
+    static Class* PtrClass;
+
     static Class* VoidClass;
     static Class* CharClass;
     // Signed numbers
@@ -26,6 +28,10 @@ namespace Tangara::Std {
 
     Entry *GetEntry() {
         return StdEntry;
+    }
+
+    Class *GetPtrClass() {
+        return PtrClass;
     }
 
     Class *GetVoidClass() {
@@ -90,6 +96,8 @@ using namespace Tangara::Std;
 void *TgStdInit() {
     StdEntry = new Entry("Std");
 
+    PtrClass = new Class("*");
+
     VoidClass = new Class("void");
     CharClass = new Class("char");
     // Signed numbers
@@ -106,9 +114,10 @@ void *TgStdInit() {
     FloatClass = new Class("float");
     DoubleClass = new Class("double");
     // Strings
-    CStrClass = new Class("char*");
+    CStrClass = new Class("cstring");
     StrClass = new Class("string");
 
+    StdEntry->AddClass(PtrClass);
     StdEntry->AddClass(VoidClass);
     StdEntry->AddClass(CharClass);
     StdEntry->AddClass(SByteClass);
@@ -134,6 +143,16 @@ void *TgStdEntry() {
 TgObj *TgNull() {
     return TgPtr(nullptr, VoidClass->GetHashCode());
 }
+TgObj *TgMakePtr(TgObj* data) {
+    return TgPtr(&(data->data), data->type_hash + TgPtrHash());
+}
+TgObj *TgStr(const char* str) {
+    auto *tgObj = (TgObj*) malloc(sizeof(TgObj));
+    tgObj->type_hash = CStrClass->GetHashCode();
+    tgObj->data = (void*)str;
+    tgObj->size = sizeof(str) + 1; // include '\0'
+    return tgObj;
+}
 TgObj *TgInt(int data) {
     auto *dataPtr = (int *) malloc(sizeof(int));
     *dataPtr = data;
@@ -151,6 +170,10 @@ TgObj *TgFloat(float data) {
     tgObj->data = dataPtr;
     tgObj->size = sizeof(float);
     return tgObj;
+}
+
+uint32_t TgPtrHash() {
+    return PtrClass->GetHashCode();
 }
 
 uint32_t TgVoidHash() {

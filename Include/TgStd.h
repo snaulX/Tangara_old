@@ -10,6 +10,8 @@
 namespace Tangara::Std {
     [[nodiscard]] Entry* GetEntry();
 
+    [[nodiscard]] Class* GetPtrClass();
+
     [[nodiscard]] Class* GetVoidClass();
     [[nodiscard]] Class* GetCharClass();
     // Signed numbers
@@ -39,9 +41,12 @@ TANGARA_API void *TgStdInit();
 TANGARA_API void *TgStdEntry();
 
 TANGARA_API TgObj *TgNull();
+TANGARA_API TgObj *TgMakePtr(TgObj* data);
+TANGARA_API TgObj *TgStr(const char* str);
 TANGARA_API TgObj *TgInt(int data);
 TANGARA_API TgObj *TgFloat(float data);
 
+TANGARA_API uint32_t TgPtrHash();
 TANGARA_API uint32_t TgVoidHash();
 TANGARA_API uint32_t TgIntHash();
 TANGARA_API uint32_t TgFloatHash();

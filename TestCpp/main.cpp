@@ -13,8 +13,14 @@ int main()
     TgObj *obj = cl->New(Tangara::EmptyParams());
     TgObj* params[] = {TgInt(10)};
     cl->GetMethod("SetNumb")->RunSafe(obj, {1, params});
-    TgObj* name_params[] = {TgPtr((void *) "Alex", TgCStrHash())};
-    cl->GetMethod("Greetings")->RunSafe(obj, {1, name_params});
+    TgObj* nameParams[] = {TgStr("Alex")};
+    cl->GetMethod("Greetings")->RunSafe(obj, {1, nameParams});
     TgObj *tgNumb = cl->GetMethod("GetNumb")->RunSafe(obj, Tangara::EmptyParams());
     std::cout << *((int*)tgNumb->data) << std::endl;
+
+    Class *snaulx = entry->GetClass("Snaulx");
+    TgObj *snaulxParams[] = {TgStr("Sanya")};
+    TgObj *snObj = snaulx->New({1, snaulxParams});
+    TgObj *clParams[] = {TgMakePtr(obj)};
+    snaulx->GetMethod("PrintName")->RunSafe(snObj, {1, clParams});
 }
