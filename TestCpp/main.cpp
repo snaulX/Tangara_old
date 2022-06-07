@@ -27,52 +27,45 @@ private:
 };
 static CreateClass createClass_MyClass("MyClass");
 
-extern "C" TgObj* tg_MyClass_ctor0(TgObj* params[])
+extern "C" TANGARA_API TgObj* tg_MyClass_ctor0(TgObj* params[])
 {
     return TgPtr((void *) new MyClass(), TgGetClassHash("MyClass"));
 }
-static CreateCtor createCtor_MyClass0(tg_MyClass_ctor0, {}, {}, 0);
+static CreateCtor createCtor_MyClass0(tg_MyClass_ctor0, 0);
 
-extern "C" TgObj* tg_MyClass_GetName(void* obj, TgObj* params[]) {
+extern "C" TANGARA_API TgObj* tg_MyClass_GetName(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     char* arg0 = static_cast<char *>(malloc(params[0]->size));
     memcpy(arg0, params[0]->data, params[0]->size);
     auto* tgObj = TgPtr(cppObj->GetName(arg0), TgGetClassHash("cstring"));
     free(arg0);
-    char* str = (char*)tgObj->data;
     return tgObj;
 }
-static CreateMethod createMethod_MyClass_GetName("GetName", tg_MyClass_GetName, {
-    .length = 1,
-    .types = {
-            TgCStrHash()
-    },
-    .names = {
-            "name"
-    }
-});
+static CreateMethod createMethod_MyClass_GetName("GetName", tg_MyClass_GetName, 1, TgCStrHash(), "name");
 
-extern "C" TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
+extern "C" TANGARA_API TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
     cppObj->PrintInt(arg0);
     return TgNull();
 }
-static CreateMethod createMethod_MyClass_PrintInt("PrintInt", tg_MyClass_PrintInt);
+static CreateMethod createMethod_MyClass_PrintInt("PrintInt", tg_MyClass_PrintInt, 1, TgIntHash(), "a");
 
-extern "C" TgObj* tg_MyClass_SetNumb(void* obj, TgObj* params[]) {
+extern "C" TANGARA_API TgObj* tg_MyClass_SetNumb(void* obj, TgObj* params[]) {
     auto* cppObj = static_cast<MyClass*>(obj);
     int arg0 = *(int*)params[0]->data;
     cppObj->SetNumb(arg0);
     return TgNull();
 }
-static CreateMethod createMethod_MyClass_SetNumb("SetNumb", tg_MyClass_SetNumb);
+static CreateMethod createMethod_MyClass_SetNumb("SetNumb", tg_MyClass_SetNumb, 1, TgIntHash(), "n");
 
 // Main code
 using namespace Tangara;
 
 void* DllLoad(const char* name) { return nullptr; }
-void* GetEntry(void* dll, const char* name) { return nullptr; }
+void* GetEntry(void* dll, const char* name) {
+    return TgGetEntry();
+}
 void* GetClass(void* entry, const char* name) {
     return ((Entry*)entry)->GetClass(name);
 }
@@ -88,10 +81,6 @@ TgObj* RunMethod(TgObj* obj, void* method, const TgParams &params) {
 
 int main()
 {
-    // EnigmaLabs code
-    auto* std = static_cast<Entry *>(TgStdInit());
-
-
     // Main code
     auto dll = DllLoad("EnigmaLabs");
     auto entry = GetEntry(dll, "EnigmaLabs");
@@ -100,25 +89,16 @@ int main()
 
     auto GetName = GetMethod(MyClass, "GetName");
     TgObj* params[] = {TgPtr((void *) "kek", TgCStrHash())};
-    auto name = (char*)RunMethod(obj, GetName, {
-        .length = 1,
-        .params = params
-    })->data;
+    auto name = (char*)RunMethod(obj, GetName, {1, params})->data;
     std::cout << name << std::endl;
 
     auto SetNumb = GetMethod(MyClass, "SetNumb");
     TgObj* numbParams[] = {TgInt(10)};
-    RunMethod(obj, SetNumb, {
-        .length = 1,
-        .params = numbParams
-    });
+    RunMethod(obj, SetNumb, {1, numbParams});
 
     auto PrintInt = GetMethod(MyClass, "PrintInt");
     TgObj* intParams[] = {TgInt(5)};
-    RunMethod(obj, PrintInt, {
-        .length = 1,
-        .params = intParams
-    });
+    RunMethod(obj, PrintInt, {1, intParams});
     free(obj);
     //TgDestroy(obj);
 }

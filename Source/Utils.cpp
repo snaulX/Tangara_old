@@ -15,10 +15,7 @@ namespace Tangara {
     }
 
     TgParams EmptyParams() {
-        return {
-            .length = 0,
-            .params = nullptr
-        };
+        return {0, nullptr};
     }
 
     bool operator==(const TgParamTypes& left, const TgParamTypes& right) {

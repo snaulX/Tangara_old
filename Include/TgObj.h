@@ -3,10 +3,7 @@
 #include "TangaraBase.h"
 
 #ifdef __cplusplus
-#include <cstdint>
 extern "C" {
-#else
-#include <stdint.h>
 #endif
 typedef struct _TgObj {
     uint32_t type_hash;

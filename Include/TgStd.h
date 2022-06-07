@@ -8,26 +8,26 @@
 #include "Entry.hpp"
 
 namespace Tangara::Std {
-    Entry* StdEntry;
+    [[nodiscard]] Entry* GetEntry();
 
-    Class* VoidClass;
-    Class* CharClass;
+    [[nodiscard]] Class* GetVoidClass();
+    [[nodiscard]] Class* GetCharClass();
     // Signed numbers
-    Class* SByteClass;
-    Class* ShortClass;
-    Class* IntClass;
-    Class* LongClass;
+    [[nodiscard]] Class* GetSByteClass();
+    [[nodiscard]] Class* GetShortClass();
+    [[nodiscard]] Class* GetIntClass();
+    [[nodiscard]] Class* GetLongClass();
     // Unsigned numbers
-    Class* ByteClass;
-    Class* UShortClass;
-    Class* UIntClass;
-    Class* ULongClass;
+    [[nodiscard]] Class* GetByteClass();
+    [[nodiscard]] Class* GetUShortClass();
+    [[nodiscard]] Class* GetUIntClass();
+    [[nodiscard]] Class* GetULongClass();
     // Numbers with float point
-    Class* FloatClass;
-    Class* DoubleClass;
+    [[nodiscard]] Class* GetFloatClass();
+    [[nodiscard]] Class* GetDoubleClass();
     // Strings
-    Class* CStrClass;
-    Class* StrClass;
+    [[nodiscard]] Class* GetCStrClass();
+    [[nodiscard]] Class* GetStrClass();
 }
 
 extern "C" {

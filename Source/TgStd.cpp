@@ -2,6 +2,89 @@
 #include <memory>
 
 using namespace Tangara;
+namespace Tangara::Std {
+    static Entry* StdEntry;
+
+    static Class* VoidClass;
+    static Class* CharClass;
+    // Signed numbers
+    static Class* SByteClass;
+    static Class* ShortClass;
+    static Class* IntClass;
+    static Class* LongClass;
+    // Unsigned numbers
+    static Class* ByteClass;
+    static Class* UShortClass;
+    static Class* UIntClass;
+    static Class* ULongClass;
+    // Numbers with float point
+    static Class* FloatClass;
+    static Class* DoubleClass;
+    // Strings
+    static Class* CStrClass;
+    static Class* StrClass;
+
+    Entry *GetEntry() {
+        return StdEntry;
+    }
+
+    Class *GetVoidClass() {
+        return VoidClass;
+    }
+
+    Class *GetCharClass() {
+        return CharClass;
+    }
+
+    Class *GetSByteClass() {
+        return SByteClass;
+    }
+
+    Class *GetShortClass() {
+        return ShortClass;
+    }
+
+    Class *GetIntClass() {
+        return IntClass;
+    }
+
+    Class *GetLongClass() {
+        return LongClass;
+    }
+
+    Class *GetByteClass() {
+        return ByteClass;
+    }
+
+    Class *GetUShortClass() {
+        return UShortClass;
+    }
+
+    Class *GetUIntClass() {
+        return UIntClass;
+    }
+
+    Class *GetULongClass() {
+        return ULongClass;
+    }
+
+    Class *GetFloatClass() {
+        return FloatClass;
+    }
+
+    Class *GetDoubleClass() {
+        return DoubleClass;
+    }
+
+    Class *GetCStrClass() {
+        return CStrClass;
+    }
+
+    Class *GetStrClass() {
+        return StrClass;
+    }
+}
+
 using namespace Tangara::Std;
 
 void *TgStdInit() {

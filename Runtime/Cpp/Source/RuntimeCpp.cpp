@@ -7,7 +7,7 @@ namespace Tangara::Runtime::Cpp {
 
     Entry *TgCreateEntry(const char *name) {
         auto* e = new Entry(name);
-        e->LinkEntry(static_cast<Entry *>(TgStdEntry()));
+        e->LinkEntry(static_cast<Entry *>(TgStdInit()));
         entry = e;
         return e;
     }
@@ -23,21 +23,17 @@ namespace Tangara::Runtime::Cpp {
         return cl;
     }
 
-    void TgCreateMethod(const char* name, TgMethodDelegate delegate, const TgParamTypes& paramTypes) {
+    void TgCreateMethod(const char* name, TgMethodDelegate delegate, uint32_t* types, char** paramNames, int length) {
+        TgParamTypes paramTypes = {length, types, paramNames};
         currentClass->CreateMethod(name, delegate, paramTypes);
     }
 
-    void TgCreateCtor(TgFuncDelegate delegate, char** typeNames, char** paramNames, int length) {
-        auto* hashes = new uint32_t[length];
-        for (int i = 0; i < length; i++) {
-            hashes[i] = TgGetClassHash(typeNames[i]);
-        }
-        TgParamTypes types = {
-                .length = length,
-                .types = hashes,
-                .names = paramNames
-        };
-        auto* ctor = new Constructor(delegate, types);
-        currentClass->AddConstructor(ctor);
+    void TgCreateCtor(TgFuncDelegate delegate, uint32_t* types, char** paramNames, int length) {
+        TgParamTypes paramTypes = {length, types, paramNames};
+        currentClass->AddConstructor(new Constructor(delegate, paramTypes));
+    }
+
+    Entry *TgGetEntry() {
+        return entry;
     }
 }
