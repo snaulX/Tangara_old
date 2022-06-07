@@ -3,7 +3,10 @@
 
 namespace Tangara::Runtime::Cpp {
     static Entry* entry;
-    static Class* currentClass;
+
+    Entry *TgGetEntry() {
+        return entry;
+    }
 
     Entry *TgCreateEntry(const char *name) {
         auto* e = new Entry(name);
@@ -14,26 +17,5 @@ namespace Tangara::Runtime::Cpp {
 
     uint32_t TgGetClassHash(const char* name) {
         return entry->GetClass(name)->GetHashCode();
-    }
-
-    Class *TgCreateClass(const char* name) {
-        auto* cl = new Class(name);
-        entry->AddClass(cl);
-        currentClass = cl;
-        return cl;
-    }
-
-    void TgCreateMethod(const char* name, TgMethodDelegate delegate, uint32_t* types, char** paramNames, int length) {
-        TgParamTypes paramTypes = {length, types, paramNames};
-        currentClass->CreateMethod(name, delegate, paramTypes);
-    }
-
-    void TgCreateCtor(TgFuncDelegate delegate, uint32_t* types, char** paramNames, int length) {
-        TgParamTypes paramTypes = {length, types, paramNames};
-        currentClass->AddConstructor(new Constructor(delegate, paramTypes));
-    }
-
-    Entry *TgGetEntry() {
-        return entry;
     }
 }

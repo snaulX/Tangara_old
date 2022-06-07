@@ -106,7 +106,7 @@ void *TgStdInit() {
     FloatClass = new Class("float");
     DoubleClass = new Class("double");
     // Strings
-    CStrClass = new Class("cstring");
+    CStrClass = new Class("char*");
     StrClass = new Class("string");
 
     StdEntry->AddClass(VoidClass);

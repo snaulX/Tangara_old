@@ -1,0 +1,47 @@
+{
+    "entries": [
+        {
+            "name": "EnigmaLabs",
+            "includes": [
+                "MyClass.hpp"
+            ],
+            "classes": [
+                {
+                    "name": "EnigmaLabs.MyClass",
+                    "methods": [
+                        {
+                            "name": "Greetings",
+                            "params": [
+                                {
+                                    "name": "name",
+                                    "type": "char*"
+                                }
+                            ],
+                            "returnType": "void"
+                        },
+                        {
+                            "name": "SetNumb",
+                            "params": [
+                                {
+                                    "name": "numb",
+                                    "type": "int"
+                                }
+                            ],
+                            "returnType": "void"
+                        },
+                        {
+                            "name": "GetNumb",
+                            "params": [],
+                            "returnType": "int"
+                        }
+                    ],
+                    "constructors": [
+                        {
+                            "params": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,6 +1,5 @@
 #ifndef TANGARA_CLASS_HPP
 #define TANGARA_CLASS_HPP
-
 #include <vector>
 #include "Constructor.hpp"
 #include "Method.hpp"
@@ -13,9 +12,13 @@ namespace Tangara {
 
         ~Class();
 
-        void AddConstructor(Constructor* ctor) { ctors.push_back(ctor); }
-        Method* CreateMethod(const char* name, TgMethodDelegate* delegate, const TgParamTypes& params) {
-            auto* method = new Method(name, hashcode, delegate, params);
+        Constructor* CreateConstructor(TgFuncDelegate* delegate, const TgParamTypes& params) {
+            auto* ctor = new Constructor(hashcode, delegate, params);
+            ctors.push_back(ctor);
+            return ctor;
+        }
+        Method* CreateMethod(const char* name, TgMethodDelegate* delegate, uint32_t returnType, const TgParamTypes& params) {
+            auto* method = new Method(name, hashcode, returnType, delegate, params);
             methods.push_back(method);
             return method;
         }

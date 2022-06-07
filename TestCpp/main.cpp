@@ -1,104 +1,20 @@
 #include <iostream>
-#include <vector>
-#include "RuntimeCpp.hpp"
-#include "Utils.hpp"
+#include "MyClass.hpp"
+#include "Entry.hpp"
 #include "TgStd.h"
+#include "Utils.hpp"
 
-// Lib code
-using namespace Tangara::Runtime::Cpp;
-
-static CreateEntry createEntry_EnigmaLabs("EnigmaLabs");
-
-class MyClass {
-public:
-    MyClass() = default;
-
-    char* GetName(char* name) {
-        char* new_name = (char*)(malloc(sizeof(name) + 5));
-        memcpy(new_name, "Hey ", 4);
-        strcpy(new_name + 4,  name);
-        return new_name;
-    }
-    void PrintInt(int a) const { std::cout << a + numb << std::endl; }
-    void SetNumb(int n) { numb = n; }
-
-private:
-    int numb = 0;
-};
-static CreateClass createClass_MyClass("MyClass");
-
-extern "C" TANGARA_API TgObj* tg_MyClass_ctor0(TgObj* params[])
-{
-    return TgPtr((void *) new MyClass(), TgGetClassHash("MyClass"));
-}
-static CreateCtor createCtor_MyClass0(tg_MyClass_ctor0, 0);
-
-extern "C" TANGARA_API TgObj* tg_MyClass_GetName(void* obj, TgObj* params[]) {
-    auto* cppObj = static_cast<MyClass*>(obj);
-    char* arg0 = static_cast<char *>(malloc(params[0]->size));
-    memcpy(arg0, params[0]->data, params[0]->size);
-    auto* tgObj = TgPtr(cppObj->GetName(arg0), TgGetClassHash("cstring"));
-    free(arg0);
-    return tgObj;
-}
-static CreateMethod createMethod_MyClass_GetName("GetName", tg_MyClass_GetName, 1, TgCStrHash(), "name");
-
-extern "C" TANGARA_API TgObj* tg_MyClass_PrintInt(void* obj, TgObj* params[]) {
-    auto* cppObj = static_cast<MyClass*>(obj);
-    int arg0 = *(int*)params[0]->data;
-    cppObj->PrintInt(arg0);
-    return TgNull();
-}
-static CreateMethod createMethod_MyClass_PrintInt("PrintInt", tg_MyClass_PrintInt, 1, TgIntHash(), "a");
-
-extern "C" TANGARA_API TgObj* tg_MyClass_SetNumb(void* obj, TgObj* params[]) {
-    auto* cppObj = static_cast<MyClass*>(obj);
-    int arg0 = *(int*)params[0]->data;
-    cppObj->SetNumb(arg0);
-    return TgNull();
-}
-static CreateMethod createMethod_MyClass_SetNumb("SetNumb", tg_MyClass_SetNumb, 1, TgIntHash(), "n");
-
-// Main code
 using namespace Tangara;
-
-void* DllLoad(const char* name) { return nullptr; }
-void* GetEntry(void* dll, const char* name) {
-    return TgGetEntry();
-}
-void* GetClass(void* entry, const char* name) {
-    return ((Entry*)entry)->GetClass(name);
-}
-void* GetMethod(void* cl, const char* name) {
-    return ((Class*)cl)->GetMethod(name);
-}
-TgObj* CreateObject(void* cl, const TgParams &params) {
-    return ((Class*)cl)->New(params);
-}
-TgObj* RunMethod(TgObj* obj, void* method, const TgParams &params) {
-    return ((Method*)method)->RunSafe(obj, params);
-}
 
 int main()
 {
-    // Main code
-    auto dll = DllLoad("EnigmaLabs");
-    auto entry = GetEntry(dll, "EnigmaLabs");
-    auto MyClass = GetClass(entry, "MyClass");
-    auto obj = CreateObject(MyClass, Tangara::EmptyParams());
-
-    auto GetName = GetMethod(MyClass, "GetName");
-    TgObj* params[] = {TgPtr((void *) "kek", TgCStrHash())};
-    auto name = (char*)RunMethod(obj, GetName, {1, params})->data;
-    std::cout << name << std::endl;
-
-    auto SetNumb = GetMethod(MyClass, "SetNumb");
-    TgObj* numbParams[] = {TgInt(10)};
-    RunMethod(obj, SetNumb, {1, numbParams});
-
-    auto PrintInt = GetMethod(MyClass, "PrintInt");
-    TgObj* intParams[] = {TgInt(5)};
-    RunMethod(obj, PrintInt, {1, intParams});
-    free(obj);
-    //TgDestroy(obj);
+    auto* entry = (Entry*)tgLoadEntry();
+    Class *cl = entry->GetClass("EnigmaLabs.MyClass");
+    TgObj *obj = cl->New(Tangara::EmptyParams());
+    TgObj* params[] = {TgInt(10)};
+    cl->GetMethod("SetNumb")->RunSafe(obj, {1, params});
+    TgObj* name_params[] = {TgPtr((void *) "Alex", TgCStrHash())};
+    cl->GetMethod("Greetings")->RunSafe(obj, {1, name_params});
+    TgObj *tgNumb = cl->GetMethod("GetNumb")->RunSafe(obj, Tangara::EmptyParams());
+    std::cout << *((int*)tgNumb->data) << std::endl;
 }

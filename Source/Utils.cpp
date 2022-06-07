@@ -14,8 +14,10 @@ namespace Tangara {
         }
     }
 
+    // Create local variable to avoid allocation of params on every calling
+    TgParams emptyParams = {0, nullptr};
     TgParams EmptyParams() {
-        return {0, nullptr};
+        return emptyParams;
     }
 
     bool operator==(const TgParamTypes& left, const TgParamTypes& right) {

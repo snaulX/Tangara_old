@@ -2,8 +2,8 @@
 #include "Utils.hpp"
 
 namespace Tangara {
-    Constructor::Constructor(TgFuncDelegate *delegate, const TgParamTypes& paramTypes)
-    : delegate(delegate), paramTypes(paramTypes) { }
+    Constructor::Constructor(uint32_t type, TgFuncDelegate *delegate, const TgParamTypes& paramTypes)
+    : type(type), delegate(delegate), paramTypes(paramTypes) { }
 
     TgObj *Constructor::RunSafe(const TgParams &params) {
         CheckParams(params, paramTypes);

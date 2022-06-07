@@ -3,8 +3,8 @@
 
 namespace Tangara {
 
-    Method::Method(const char* name, uint32_t typeHash, TgMethodDelegate *delegate, const TgParamTypes &paramTypes)
-    : name(name), type(typeHash), delegate(delegate), paramTypes(paramTypes) { }
+    Method::Method(const char* name, uint32_t typeHash, uint32_t retTypeHash, TgMethodDelegate *delegate, const TgParamTypes &paramTypes)
+    : name(name), type(typeHash), returnType(retTypeHash), delegate(delegate), paramTypes(paramTypes) { }
 
     TgObj *Method::RunSafe(TgObj *callObj, const TgParams &params) {
         CheckParams(params, paramTypes);
