@@ -78,6 +78,10 @@ for entry in entries:
             funcsCode.append('extern "C" TgObj* {}(void* obj, TgObj* params[])\n{{'.format(mVarName))
             funcsCode.append('\tauto* cppObj = static_cast<{}*>(obj);'.format(clCppName))
             returnType = fixNamespaces(method['returnType'].strip())
+            if returnType.startswith('const '):
+                constModifier = 'const'
+            else:
+                constModifier = ''
             if returnType == 'void':
                 funcsCode.append('\tcppObj->{}({});'.format(methodName, genParamsFuncCode(params)))
                 funcsCode.append('\treturn TgNull();')
@@ -85,11 +89,12 @@ for entry in entries:
                 funcsCode.append('\t{} result = cppObj->{}({});'.format(returnType, methodName, genParamsFuncCode(params)))
                 funcsCode.append('\t{}* resultPtr = ({}*)malloc(sizeof({}));'.format(returnType, returnType, returnType))
                 funcsCode.append('\t*resultPtr = result;')
-                funcsCode.append('\tTgObj* tgObj = TgPtr(resultPtr, TgGetClassHash("{}"));'.format(returnType))
+                funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})resultPtr, TgGetClassHash("{}"));'
+                                 .format(constModifier, returnType))
                 funcsCode.append('\treturn tgObj;')
             else:
-                funcsCode.append('\tTgObj* tgObj = TgPtr(cppObj->{}({}), TgGetClassHash("{}"));'.format(
-                    methodName, genParamsFuncCode(params), returnType)
+                funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})cppObj->{}({}), TgGetClassHash("{}"));'.format(
+                    constModifier, methodName, genParamsFuncCode(params), returnType)
                 )
                 funcsCode.append('\treturn tgObj;')
             funcsCode.append('}')

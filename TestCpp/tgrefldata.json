@@ -67,6 +67,72 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "Tangara",
+            "includes": [
+                "Class.hpp",
+                "Constructor.hpp",
+                "Entry.hpp",
+                "Method.hpp"
+            ],
+            "classes": [
+                {
+                    "name": "Tangara.Entry",
+                    "methods": [
+                        {
+                            "name": "AddClass",
+                            "params": [
+                                {
+                                    "name": "cl",
+                                    "type": "Tangara.Class*"
+                                }
+                            ],
+                            "returnType": "void"
+                        },
+                        {
+                            "name": "LinkEntry",
+                            "params": [
+                                {
+                                    "name": "e",
+                                    "type": "Tangara.Entry*"
+                                }
+                            ],
+                            "returnType": "void"
+                        },
+                        {
+                            "name": "GetClass",
+                            "params": [
+                                {
+                                    "name": "name",
+                                    "type": "char*"
+                                }
+                            ],
+                            "returnType": "Tangara.Class*"
+                        },
+                        {
+                            "name": "GetName",
+                            "params": [],
+                            "returnType": "const char*"
+                        },
+                        {
+                            "name": "GetHashCode",
+                            "params": [],
+                            "returnType": "uint32_t"
+                        }
+                    ],
+                    "constructors": [
+                        {
+                            "params": [
+                                {
+                                    "name": "name",
+                                    "type": "char*"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

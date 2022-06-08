@@ -93,7 +93,10 @@ namespace Tangara::Std {
 
 using namespace Tangara::Std;
 
+static bool isStdInited = false;
 void *TgStdInit() {
+    if (isStdInited) return StdEntry;
+
     StdEntry = new Entry("Std");
 
     PtrClass = new Class("*");
@@ -133,6 +136,7 @@ void *TgStdInit() {
     StdEntry->AddClass(CStrClass);
     StdEntry->AddClass(StrClass);
 
+    isStdInited = true;
     return StdEntry;
 }
 
@@ -140,8 +144,10 @@ void *TgStdEntry() {
     return StdEntry;
 }
 
+static TgObj *tgNull;
 TgObj *TgNull() {
-    return TgPtr(nullptr, VoidClass->GetHashCode());
+    if (!tgNull) tgNull = TgPtr(nullptr, VoidClass->GetHashCode());
+    return tgNull;
 }
 TgObj *TgMakePtr(TgObj* data) {
     return TgPtr(&(data->data), data->type_hash + TgPtrHash());
@@ -150,7 +156,7 @@ TgObj *TgStr(const char* str) {
     auto *tgObj = (TgObj*) malloc(sizeof(TgObj));
     tgObj->type_hash = CStrClass->GetHashCode();
     tgObj->data = (void*)str;
-    tgObj->size = sizeof(str) + 1; // include '\0'
+    tgObj->size = sizeof(str) + sizeof(char); // include '\0'
     return tgObj;
 }
 TgObj *TgInt(int data) {

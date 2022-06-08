@@ -24,6 +24,7 @@ namespace Tangara {
         }
         /// Creates new Tangara object of this class
         TgObj* New(const TgParams &params);
+        TgObj* Run(TgObj* self, const char* methodName, const TgParams &params);
 
         [[nodiscard]] const char* GetName() const { return name; }
         [[nodiscard]] uint32_t GetHashCode() const { return hashcode; }

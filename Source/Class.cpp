@@ -29,5 +29,20 @@ namespace Tangara {
         return nullptr;
     }
 
+    TgObj *Class::Run(TgObj *self, const char *methodName, const TgParams &params) {
+        for (Method* m : methods) {
+            if (strcmp(m->GetName(), methodName) == 0) {
+                try {
+                    // Run method with type-checking
+                    return m->RunSafe(self, params);
+                } catch (const std::exception& e) {
+                    // This method doesn't match ours parameters
+                    continue;
+                }
+            }
+        }
+        throw std::exception("No method with this name and parameters");
+    }
+
     Class::~Class() = default;
 }

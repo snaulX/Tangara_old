@@ -29,7 +29,7 @@ extern "C" TgObj* tg_EnigmaLabs_MyClass_GetNumb(void* obj, TgObj* params[])
 	int result = cppObj->GetNumb();
 	int* resultPtr = (int*)malloc(sizeof(int));
 	*resultPtr = result;
-	TgObj* tgObj = TgPtr(resultPtr, TgGetClassHash("int"));
+	TgObj* tgObj = TgPtr((void* )resultPtr, TgGetClassHash("int"));
 	return tgObj;
 }
 extern "C" TgObj* tg_Snaulx_ctor0(TgObj* params[])
