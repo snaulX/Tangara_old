@@ -36,6 +36,53 @@ def genParamTypes(funcName, params):
         mainCode.append('{}.names[{}] = "{}";'.format(varName, i, param['name'].strip()))
     return varName
 
+
+def parseCtors(ctors):
+    for i in range(len(ctors)):
+        ctorName = 'tg_{}_ctor{}'.format(clCodeName, i)
+        params = ctors[i]['params']
+        funcsCode.append('extern "C" TgObj* {}(TgObj* params[])\n{{'.format(ctorName))
+        funcsCode.append('\treturn TgPtr((void*) new {}({}), TgGetClassHash("{}"));\n}}'.format(
+            clCppName, genParamsFuncCode(params), className)
+        )
+        mainCode.append('{}->CreateConstructor({}, {});'.format(
+            clVarName, ctorName, genParamTypes('{}_ctor{}'.format(clCodeName, i), params))
+        )
+
+
+def parseMethods(methods):
+    for method in methods:
+        methodName = method['name'].strip()
+        mVarName = 'tg_{}_{}'.format(clCodeName, methodName)
+        params = method['params']
+        funcsCode.append('extern "C" TgObj* {}(void* obj, TgObj* params[])\n{{'.format(mVarName))
+        funcsCode.append('\tauto* cppObj = static_cast<{}*>(obj);'.format(clCppName))
+        returnType = fixNamespaces(method['returnType'].strip())
+        if returnType.startswith('const '):
+            constModifier = 'const'
+        else:
+            constModifier = ''
+        if returnType == 'void':
+            funcsCode.append('\tcppObj->{}({});'.format(methodName, genParamsFuncCode(params)))
+            funcsCode.append('\treturn TgNull();')
+        elif not returnType.endswith('*'):
+            funcsCode.append('\t{} result = cppObj->{}({});'.format(returnType, methodName, genParamsFuncCode(params)))
+            funcsCode.append('\t{}* resultPtr = ({}*)malloc(sizeof({}));'.format(returnType, returnType, returnType))
+            funcsCode.append('\t*resultPtr = result;')
+            funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})resultPtr, TgGetClassHash("{}"));'
+                             .format(constModifier, returnType))
+            funcsCode.append('\treturn tgObj;')
+        else:
+            funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})cppObj->{}({}), TgGetClassHash("{}"));'.format(
+                constModifier, methodName, genParamsFuncCode(params), returnType)
+            )
+            funcsCode.append('\treturn tgObj;')
+        funcsCode.append('}')
+        mainCode.append('{}->CreateMethod("{}", {}, TgGetClassHash("{}"), {});'.format(
+            clVarName, methodName, mVarName, returnType, genParamTypes('{}_{}'.format(clCodeName, methodName), params)
+        ))
+
+
 if len(sys.argv) == 2:
     reflectionFile = sys.argv[1]
 else:
@@ -59,48 +106,8 @@ for entry in entries:
         clCodeName = '_'.join(clNames)
         clVarName = '{}_class'.format(clCodeName)
         mainCode.append('auto *{} = new Class("{}");'.format(clVarName, className))
-        ctors = cl['constructors']
-        for i in range(len(ctors)):
-            ctorName = 'tg_{}_ctor{}'.format(clCodeName, i)
-            params = ctors[i]['params']
-            funcsCode.append('extern "C" TgObj* {}(TgObj* params[])\n{{'.format(ctorName))
-            funcsCode.append('\treturn TgPtr((void*) new {}({}), TgGetClassHash("{}"));\n}}'.format(
-                clCppName, genParamsFuncCode(params), className)
-            )
-            mainCode.append('{}->CreateConstructor({}, {});'.format(
-                clVarName, ctorName, genParamTypes('{}_ctor{}'.format(clCodeName, i), params))
-            )
-        methods = cl['methods']
-        for method in methods:
-            methodName = method['name'].strip()
-            mVarName = 'tg_{}_{}'.format(clCodeName, methodName)
-            params = method['params']
-            funcsCode.append('extern "C" TgObj* {}(void* obj, TgObj* params[])\n{{'.format(mVarName))
-            funcsCode.append('\tauto* cppObj = static_cast<{}*>(obj);'.format(clCppName))
-            returnType = fixNamespaces(method['returnType'].strip())
-            if returnType.startswith('const '):
-                constModifier = 'const'
-            else:
-                constModifier = ''
-            if returnType == 'void':
-                funcsCode.append('\tcppObj->{}({});'.format(methodName, genParamsFuncCode(params)))
-                funcsCode.append('\treturn TgNull();')
-            elif not returnType.endswith('*'):
-                funcsCode.append('\t{} result = cppObj->{}({});'.format(returnType, methodName, genParamsFuncCode(params)))
-                funcsCode.append('\t{}* resultPtr = ({}*)malloc(sizeof({}));'.format(returnType, returnType, returnType))
-                funcsCode.append('\t*resultPtr = result;')
-                funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})resultPtr, TgGetClassHash("{}"));'
-                                 .format(constModifier, returnType))
-                funcsCode.append('\treturn tgObj;')
-            else:
-                funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})cppObj->{}({}), TgGetClassHash("{}"));'.format(
-                    constModifier, methodName, genParamsFuncCode(params), returnType)
-                )
-                funcsCode.append('\treturn tgObj;')
-            funcsCode.append('}')
-            mainCode.append('{}->CreateMethod("{}", {}, TgGetClassHash("{}"), {});'.format(
-                clVarName, methodName, mVarName, returnType, genParamTypes('{}_{}'.format(clCodeName, methodName), params)
-            ))
+        parseCtors(cl['constructors'])
+        parseMethods(cl['methods'])
         mainCode.append('{}->AddClass({});'.format(eVarName, clVarName))
 
     mainCode.append('return {};'.format(eVarName))

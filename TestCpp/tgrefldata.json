@@ -2,6 +2,9 @@
     "entries": [
         {
             "name": "EnigmaLabs",
+            "references": [
+                "Tangara"
+            ],
             "includes": [
                 "Snaulx.hpp"
             ],
@@ -119,6 +122,49 @@
                             "name": "GetHashCode",
                             "params": [],
                             "returnType": "uint32_t"
+                        }
+                    ],
+                    "constructors": [
+                        {
+                            "params": [
+                                {
+                                    "name": "name",
+                                    "type": "char*"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Tangara.Class",
+                    "methods": [
+                        {
+                            "name": "New",
+                            "params": [
+                                {
+                                    "name": "params",
+                                    "type": "TgParams"
+                                }
+                            ],
+                            "returnType": "TgObj*"
+                        },
+                        {
+                            "name": "Run",
+                            "params": [
+                                {
+                                    "name": "self",
+                                    "type": "TgObj*"
+                                },
+                                {
+                                    "name": "methodName",
+                                    "type": "char*"
+                                },
+                                {
+                                    "name": "params",
+                                    "type": "TgParams"
+                                }
+                            ],
+                            "returnType": "TgObj*"
                         }
                     ],
                     "constructors": [

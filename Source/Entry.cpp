@@ -2,7 +2,7 @@
 #include "xxhash/xxhash32.h"
 
 namespace Tangara {
-    Entry::Entry(const char* name) : name(name), hashcode(XXHash32::hash(this, sizeof(Entry), TG_HASH_SEED))
+    Entry::Entry(const char* name) : name(name), hashcode(XXHash32::hash(this, sizeof(Entry), TG_CLASS_SEED))
     { }
 
     Entry::~Entry() = default;

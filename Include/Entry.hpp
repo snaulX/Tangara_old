@@ -20,7 +20,7 @@ namespace Tangara {
         [[nodiscard]] uint32_t GetHashCode() const { return hashcode; }
     private:
         const char* name;
-        uint32_t hashcode;
+        const uint32_t hashcode;
 
         std::vector<Class*> classes;
         std::vector<Entry*> links;

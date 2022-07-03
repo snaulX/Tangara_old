@@ -2,7 +2,7 @@
 #include "xxhash/xxhash32.h"
 
 namespace Tangara {
-    Class::Class(const char *_name) : name(_name), hashcode(XXHash32::hash(this, sizeof(Class), TG_HASH_SEED))
+    Class::Class(const char *_name) : name(_name), hashcode(XXHash32::hash(this, sizeof(Class), TG_CLASS_SEED))
     { }
 
     TgObj *Class::New(const TgParams &params) {
