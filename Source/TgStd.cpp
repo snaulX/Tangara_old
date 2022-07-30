@@ -120,21 +120,21 @@ void *TgStdInit() {
     CStrClass = new Class("cstring");
     StrClass = new Class("string");
 
-    StdEntry->AddClass(PtrClass);
-    StdEntry->AddClass(VoidClass);
-    StdEntry->AddClass(CharClass);
-    StdEntry->AddClass(SByteClass);
-    StdEntry->AddClass(ShortClass);
-    StdEntry->AddClass(IntClass);
-    StdEntry->AddClass(LongClass);
-    StdEntry->AddClass(ByteClass);
-    StdEntry->AddClass(UShortClass);
-    StdEntry->AddClass(UIntClass);
-    StdEntry->AddClass(ULongClass);
-    StdEntry->AddClass(FloatClass);
-    StdEntry->AddClass(DoubleClass);
-    StdEntry->AddClass(CStrClass);
-    StdEntry->AddClass(StrClass);
+    StdEntry->AddType(PtrClass);
+    StdEntry->AddType(VoidClass);
+    StdEntry->AddType(CharClass);
+    StdEntry->AddType(SByteClass);
+    StdEntry->AddType(ShortClass);
+    StdEntry->AddType(IntClass);
+    StdEntry->AddType(LongClass);
+    StdEntry->AddType(ByteClass);
+    StdEntry->AddType(UShortClass);
+    StdEntry->AddType(UIntClass);
+    StdEntry->AddType(ULongClass);
+    StdEntry->AddType(FloatClass);
+    StdEntry->AddType(DoubleClass);
+    StdEntry->AddType(CStrClass);
+    StdEntry->AddType(StrClass);
 
     isStdInited = true;
     return StdEntry;

@@ -16,15 +16,19 @@ namespace Tangara::Runtime::Cpp {
         return e;
     }
 
-    uint32_t TgGetClassHash(const char* name) {
+    Type* TgGetType(const char* name) {
         if (strstr(name, "char*") != nullptr)
-            return TgCStrHash();
+            return (Type*)Tangara::Std::GetCStrClass();
         size_t len = strlen(name) - 1;
         if (name[len] == '*') {
             char* type = (char*)calloc(len + 1, sizeof(char));
             strncpy(type, name, len);
-            return entry->GetClass(type)->GetHashCode() + TgPtrHash();
+            return entry->GetType(type);
         }
-        return entry->GetClass(name)->GetHashCode();
+        return entry->GetType(name);
+    }
+
+    uint32_t TgGetTypeHash(const char* name) {
+        return TgGetType(name)->GetHashCode();
     }
 }

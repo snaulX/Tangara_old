@@ -32,7 +32,7 @@ def genParamTypes(funcName, params):
     mainCode.append('{}.names = (char**)calloc({}, sizeof(char*));'.format(varName, length))
     for i in range(length):
         param = params[i]
-        mainCode.append('{}.types[{}] = TgGetClassHash("{}");'.format(varName, i, param['type'].strip()))
+        mainCode.append('{}.types[{}] = TgGetTypeHash("{}");'.format(varName, i, param['type'].strip()))
         mainCode.append('{}.names[{}] = "{}";'.format(varName, i, param['name'].strip()))
     return varName
 
@@ -42,7 +42,7 @@ def parseCtors(ctors):
         ctorName = 'tg_{}_ctor{}'.format(clCodeName, i)
         params = ctors[i]['params']
         funcsCode.append('extern "C" TgObj* {}(TgObj* params[])\n{{'.format(ctorName))
-        funcsCode.append('\treturn TgPtr((void*) new {}({}), TgGetClassHash("{}"));\n}}'.format(
+        funcsCode.append('\treturn TgPtr((void*) new {}({}), TgGetTypeHash("{}"));\n}}'.format(
             clCppName, genParamsFuncCode(params), className)
         )
         mainCode.append('{}->CreateConstructor({}, {});'.format(
@@ -69,16 +69,16 @@ def parseMethods(methods):
             funcsCode.append('\t{} result = cppObj->{}({});'.format(returnType, methodName, genParamsFuncCode(params)))
             funcsCode.append('\t{}* resultPtr = ({}*)malloc(sizeof({}));'.format(returnType, returnType, returnType))
             funcsCode.append('\t*resultPtr = result;')
-            funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})resultPtr, TgGetClassHash("{}"));'
+            funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})resultPtr, TgGetTypeHash("{}"));'
                              .format(constModifier, returnType))
             funcsCode.append('\treturn tgObj;')
         else:
-            funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})cppObj->{}({}), TgGetClassHash("{}"));'.format(
+            funcsCode.append('\tTgObj* tgObj = TgPtr((void* {})cppObj->{}({}), TgGetTypeHash("{}"));'.format(
                 constModifier, methodName, genParamsFuncCode(params), returnType)
             )
             funcsCode.append('\treturn tgObj;')
         funcsCode.append('}')
-        mainCode.append('{}->CreateMethod("{}", {}, TgGetClassHash("{}"), {});'.format(
+        mainCode.append('{}->CreateMethod("{}", {}, TgGetType("{}"), {});'.format(
             clVarName, methodName, mVarName, returnType, genParamTypes('{}_{}'.format(clCodeName, methodName), params)
         ))
 
@@ -108,7 +108,7 @@ for entry in entries:
         mainCode.append('auto *{} = new Class("{}");'.format(clVarName, className))
         parseCtors(cl['constructors'])
         parseMethods(cl['methods'])
-        mainCode.append('{}->AddClass({});'.format(eVarName, clVarName))
+        mainCode.append('{}->AddType({});'.format(eVarName, clVarName))
 
     mainCode.append('return {};'.format(eVarName))
     with open('{}.Gen.cpp'.format(entryName), 'w') as file:

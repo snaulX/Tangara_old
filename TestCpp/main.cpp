@@ -9,7 +9,7 @@ using namespace Tangara;
 int main()
 {
     auto* entry = (Entry*)tgLoadEntry();
-    Class *cl = entry->GetClass("EnigmaLabs.MyClass");
+    auto *cl = (Class*)(entry->GetType("EnigmaLabs.MyClass"));
     TgObj *obj = cl->New(Tangara::EmptyParams());
     TgObj* params[] = {TgInt(10)};
     cl->Run(obj, "SetNumb", {1, params});
@@ -18,7 +18,7 @@ int main()
     TgObj *tgNumb = cl->Run(obj, "GetNumb", Tangara::EmptyParams());
     std::cout << *((int*)tgNumb->data) << std::endl;
 
-    Class *snaulx = entry->GetClass("Snaulx");
+    auto *snaulx = (Class*)(entry->GetType("Snaulx"));
     TgObj *snaulxParams[] = {TgStr("Sanya")};
     TgObj *snObj = snaulx->New({1, snaulxParams});
     TgObj *clParams[] = {TgMakePtr(obj)};

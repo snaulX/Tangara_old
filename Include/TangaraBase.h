@@ -20,6 +20,7 @@
 #else
 #include <stdint.h>
 #endif
-static const uint32_t TG_CLASS_SEED = 0;
+static const uint32_t TG_ENTRY_SEED = 0;
+static const uint32_t TG_TYPE_SEED = 0;
 
 #endif //TANGARA_TANGARABASE_H

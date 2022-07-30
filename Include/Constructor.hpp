@@ -4,10 +4,11 @@
 #include "TgObj.h"
 
 namespace Tangara {
+    class Class;
 
     class Constructor {
     public:
-        explicit Constructor(uint32_t type, TgFuncDelegate *delegate, const TgParamTypes& paramTypes);
+        explicit Constructor(Class* type, TgFuncDelegate *delegate, const TgParamTypes& paramTypes);
 
         ~Constructor();
 
@@ -18,9 +19,9 @@ namespace Tangara {
         /// Use only when you know that params matches constructor's
         TgObj* Run(const TgParams &params);
 
-        [[nodiscard]] uint32_t GetType() const { return type; }
+        [[nodiscard]] Class* GetType() const { return type; }
     private:
-        uint32_t type;
+        Class* type;
         TgFuncDelegate* delegate;
         TgParamTypes paramTypes;
     };

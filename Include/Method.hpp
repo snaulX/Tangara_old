@@ -3,10 +3,11 @@
 #include "TgObj.h"
 
 namespace Tangara {
+    class Type;
 
     class Method {
     public:
-        explicit Method(const char* name, uint32_t typeHash, uint32_t retTypeHash, TgMethodDelegate *delegate, const TgParamTypes& paramTypes);
+        explicit Method(const char* name, Type* typeHash, Type* retTypeHash, TgMethodDelegate *delegate, const TgParamTypes& paramTypes);
 
         ~Method();
 
@@ -18,12 +19,12 @@ namespace Tangara {
         TgObj* Run(void *callObj, const TgParams &params);
 
         [[nodiscard]] const char* GetName() const { return name; }
-        [[nodiscard]] uint32_t GetType() const { return type; }
-        [[nodiscard]] uint32_t GetReturnType() const { return returnType; }
+        [[nodiscard]] Type* GetType() const { return type; }
+        [[nodiscard]] Type* GetReturnType() const { return returnType; }
     private:
         const char* name;
-        uint32_t type;
-        uint32_t returnType;
+        Type* type;
+        Type* returnType;
         TgMethodDelegate *delegate;
         TgParamTypes paramTypes;
     };

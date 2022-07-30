@@ -2,37 +2,37 @@
 #include "xxhash/xxhash32.h"
 
 namespace Tangara {
-    Entry::Entry(const char* name) : name(name), hashcode(XXHash32::hash(this, sizeof(Entry), TG_CLASS_SEED))
+    Entry::Entry(const char* name) : name(name), IHashable(XXHash32::hash(name, sizeof(name), TG_ENTRY_SEED))
     { }
 
     Entry::~Entry() = default;
 
-    Class *Entry::GetClass(const char *name) {
-        for (Class* cl : classes) {
+    Type *Entry::GetType(const char *name) {
+        for (Type* cl : types) {
             if (strcmp(cl->GetName(), name) == 0) return cl;
         }
-        for (Entry* e : links) {
-            Class *clInLink = e->GetClass(name);
+        for (Entry* e : references) {
+            Type *clInLink = e->GetType(name);
             if (clInLink != nullptr) return clInLink;
         }
         return nullptr;
     }
 
-    void Entry::AddClass(Class *cl) {
-        for (Class* c : classes) {
+    void Entry::AddType(Type *type) {
+        for (Type* t : types) {
             // Check this class if it exists in this entry already
-            if (c == cl) return;
+            if (t == type) return;
         }
-        classes.push_back(cl);
+        types.push_back(type);
     }
 
     void Entry::LinkEntry(Entry *e) {
-        uint32_t eHash = e->hashcode;
-        if (hashcode == eHash)
+        uint32_t eHash = e->GetHashCode();
+        if (GetHashCode() == eHash)
             return;
-        for (Entry* link : links) {
-            if (link->hashcode == eHash) return;
+        for (Entry* link : references) {
+            if (link->GetHashCode() == eHash) return;
         }
-        links.push_back(e);
+        references.push_back(e);
     }
 }
