@@ -1,0 +1,3 @@
+[submodule "Builder/Include/xxhash"]
+	path = Builder/Include/xxhash
+	url = https://create.stephan-brumme.com/xxhash/git
