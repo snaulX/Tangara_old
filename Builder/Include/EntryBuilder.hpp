@@ -25,6 +25,7 @@ namespace Tangara {
         EntryAllocator<tgProp> PropAllocator;
         EntryAllocator<tgEvent> EventAllocator;
         EntryAllocator<tgMethod> MethodAllocator;
+        EntryAllocator<tgCtor> CtorAllocator;
     private:
         std::string _name;
         EntryRule* _rule;

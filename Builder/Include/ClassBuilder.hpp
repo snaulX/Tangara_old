@@ -7,6 +7,7 @@
 #include "EntryBuilder.hpp"
 #include "PropertyBuilder.hpp"
 #include "MethodBuilder.hpp"
+#include "ConstructorBuilder.hpp"
 
 namespace Tangara {
     struct ClassBuilder {
@@ -18,14 +19,16 @@ namespace Tangara {
         FieldBuilder<ClassBuilder> CreateField(const char* name, const tgTypeRef &type);
         PropertyBuilder<ClassBuilder> CreateProperty(const char *name, const tgTypeRef &type);
         MethodBuilder<ClassBuilder> CreateMethod(const char *name);
-        ClassBuilder& SetAccess(tgAccessModifier am);
+        ConstructorBuilder<ClassBuilder> CreateConstructor();
+        ClassBuilder &SetAccess(tgAccessModifier am);
         ClassBuilder &Inherits(const tgTypeRef &type);
         tgType Build();
 
         void AppendProp(const tgProp &prop);
         void AppendEvent(const tgEvent &event);
-        void AppendField(const tgField& field);
-        void AppendMethod(const tgMethod& method);
+        void AppendField(const tgField &field);
+        void AppendMethod(const tgMethod &method);
+        void AppendCtor(const tgCtor &ctor);
     private:
         EntryRule* _rule;
 

@@ -3,12 +3,17 @@
 #include "EntryBuilder.hpp"
 #include "ClassBuilder.hpp"
 #include "NativeMethodImpl.hpp"
+#include "NativeCtorImpl.hpp"
 #include "TgRef.hpp"
 #include "TgValue.hpp"
 
 using namespace Tangara;
 
 tgObject* EnigmaLabs_MyClass_Foo(tgObject *obj, size_t params_size, tgObject *params, void *custom_obj) {
+    return nullptr;
+}
+
+tgObject* EnigmaLabs_MyClass_ctor0(size_t params_size, tgObject *params, void *custom_obj) {
     return nullptr;
 }
 
@@ -30,10 +35,10 @@ int main()
                 .Build()
             .Implementation(NativeMethodImpl(&EnigmaLabs_MyClass_Foo))
             .Build()
-        /*.CreateConstructor()
+        .CreateConstructor()
             .Params().Build()
-            .Implementation(NativeCtorImpl(ptrOnCtorFunc))
-            .Build()*/
+            .Implementation(NativeCtorImpl(&EnigmaLabs_MyClass_ctor0))
+            .Build()
         .CreateProperty("MyProp", TgRef("PropType")).Build()
         .Build();
     printf("Param value: \"%s\"\n", (char*)mct.methods[0].params.default_values[0].value);
@@ -51,13 +56,7 @@ int main()
     eerule.Free();
     tgEntry el = eb.Build();
 
-    printf("Entry name %s\n", el.name);
-    printf("Entry fields:\n");
-    for (int j = 0; j < el.fields_size; ++j) {
-        tgField f = el.fields[j];
-        printf("%s %s with access %d and kind %d\n", (char*)f.type.ref_data,//tgResolveTypeRef(&f.type, &el)->name,
-               f.name, f.access, f.kind);
-    }
+    printf("\nEntry name %s\n", el.name);
     for (int i = 0; i < el.types_size; ++i) {
         tgType t = el.types[i];
         printf("Type %s of kind %d and access %d\n", t.name, t.kind, t.access);
@@ -73,5 +72,24 @@ int main()
             printf("%s %s with kind %d\n", (char*)p.type.ref_data,//tgResolveTypeRef(&p.type, &el)->name,
                    p.name, p.kind);
         }
+        printf("\n");
     }
+
+    /* output:
+
+    Param value: "default value"
+
+    Entry name EnigmaLabs
+    Type EnigmaLabs.MyEntity of kind 0 and access 0
+    Fields:
+    Properties:
+    int ReloadTime with kind 1
+
+    Type EnigmaLabs.MyClass of kind 0 and access 1
+    Fields:
+    FieldType fieldName with access 3 and kind 0
+    Properties:
+    PropType MyProp with kind 0
+
+     */
 }

@@ -16,6 +16,7 @@ namespace Tangara {
         _entryBuilder.MethodAllocator.Begin();
         _entryBuilder.PropAllocator.Begin();
         _entryBuilder.EventAllocator.Begin();
+        _entryBuilder.CtorAllocator.Begin();
     }
 
     tgType ClassBuilder::Build() {
@@ -37,6 +38,7 @@ namespace Tangara {
         // Constructors
         size_t ctors_count = 0;
         tgCtor *ctors = nullptr;
+        _entryBuilder.CtorAllocator.End(&ctors, ctors_count);
         // Properties
         size_t props_count = 0;
         tgProp *props = nullptr;
@@ -75,6 +77,10 @@ namespace Tangara {
         _entryBuilder.EventAllocator.Append(event);
     }
 
+    void ClassBuilder::AppendCtor(const tgCtor &ctor) {
+        _entryBuilder.CtorAllocator.Append(ctor);
+    }
+
     FieldBuilder<ClassBuilder> ClassBuilder::CreateField(const char *name, const tgTypeRef &type) {
         return {name, type, this};
     }
@@ -85,6 +91,10 @@ namespace Tangara {
 
     MethodBuilder<ClassBuilder> ClassBuilder::CreateMethod(const char *name) {
         return {name, this};
+    }
+
+    ConstructorBuilder<ClassBuilder> ClassBuilder::CreateConstructor() {
+        return {this};
     }
 
     ClassBuilder &ClassBuilder::SetAccess(tgAccessModifier am) {

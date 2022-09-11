@@ -19,6 +19,7 @@ namespace Tangara {
         EventAllocator.Trim();
         FieldAllocator.Trim();
         MethodAllocator.Trim();
+        CtorAllocator.Trim();
 
         const char* name = CopyFromStr(_name);
         uint hash = XXHash32::hash(name, strlen(name), TG_ENTRY_SEED);
@@ -29,7 +30,8 @@ namespace Tangara {
                           FieldAllocator.GetLength(), FieldAllocator.GetRawData(),
                           PropAllocator.GetLength(), PropAllocator.GetRawData(),
                           MethodAllocator.GetLength(), MethodAllocator.GetRawData(),
-                          EventAllocator.GetLength(), EventAllocator.GetRawData()};
+                          EventAllocator.GetLength(), EventAllocator.GetRawData(),
+                          CtorAllocator.GetLength(), CtorAllocator.GetRawData()};
         return result;
     }
 

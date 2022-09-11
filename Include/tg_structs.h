@@ -144,6 +144,8 @@ struct tgEntry {
     tgMethod *methods;
     size_t events_size;
     tgEvent *events;
+    size_t ctors_size;
+    tgCtor *ctors;
 };
 
 #endif //TANGARA_TG_STRUCTS_H
