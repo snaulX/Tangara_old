@@ -84,6 +84,7 @@ struct tgField {
     tgTypeRef type;
     enum tgAccessModifier access;
     enum tgFieldKind kind;
+    tgConstValue default_value;
 };
 
 struct tgProp {

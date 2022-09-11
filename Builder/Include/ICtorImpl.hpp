@@ -5,7 +5,7 @@
 namespace Tangara {
     struct ICtorImpl {
         virtual tgCtorFuncPtr GetImplementaion() {
-            return nullptr;
+            return nullptr; // TODO: throw Tangara excpetion
         }
 
         virtual void *GetCustomObject() {

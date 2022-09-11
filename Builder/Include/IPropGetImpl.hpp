@@ -1,10 +1,10 @@
-#ifndef TANGARA_IMETHODIMPL_HPP
-#define TANGARA_IMETHODIMPL_HPP
+#ifndef TANGARA_IPROPGETIMPL_HPP
+#define TANGARA_IPROPGETIMPL_HPP
 #include "tg_structs.h"
 
 namespace Tangara {
-    struct IMethodImpl {
-        virtual tgMethodFuncPtr GetImplementaion() {
+    struct IPropGetImpl {
+        virtual tgPropGetFuncPtr GetImplementaion() {
             return nullptr; // TODO: throw Tangara excpetion
         }
 
@@ -14,4 +14,4 @@ namespace Tangara {
     };
 }
 
-#endif //TANGARA_IMETHODIMPL_HPP
+#endif //TANGARA_IPROPGETIMPL_HPP

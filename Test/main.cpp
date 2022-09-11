@@ -82,12 +82,14 @@ int main()
     Entry name EnigmaLabs
     Type EnigmaLabs.MyEntity of kind 0 and access 0
     Fields:
+    int _propField_ReloadTime with access 0 and kind 0
     Properties:
     int ReloadTime with kind 1
 
     Type EnigmaLabs.MyClass of kind 0 and access 1
     Fields:
     FieldType fieldName with access 3 and kind 0
+    PropType _propField_MyProp with access 0 and kind 0
     Properties:
     PropType MyProp with kind 0
 

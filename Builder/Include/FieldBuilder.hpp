@@ -24,9 +24,13 @@ namespace Tangara {
             _kind = kind;
             return *this;
         }
+        FieldBuilder &DefaultValue(const tgConstValue &value) {
+            _defaultValue = value;
+            return *this;
+        }
 
         TBuilder &Build() {
-            tgField f = {CopyFromStr(_name), _type, _access, _kind};
+            tgField f = {CopyFromStr(_name), _type, _access, _kind, _defaultValue};
             _builder->AppendField(f);
             return *_builder;
         }
@@ -36,6 +40,7 @@ namespace Tangara {
         tgTypeRef _type;
         tgAccessModifier _access = AccessModifier_Private;
         tgFieldKind _kind = FieldKind_Default;
+        tgConstValue _defaultValue = {ValueType_Null, nullptr};
 
         TBuilder* _builder;
     };
