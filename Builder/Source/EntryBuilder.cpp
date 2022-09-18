@@ -1,5 +1,6 @@
 #include "EntryBuilder.hpp"
 #include "ClassBuilder.hpp"
+#include "StructBuilder.hpp"
 #include "Utils.hpp"
 
 namespace Tangara {
@@ -15,11 +16,11 @@ namespace Tangara {
     }
 
     tgEntry EntryBuilder::Build() {
-        PropAllocator.Trim(); // free extra space
-        EventAllocator.Trim();
-        FieldAllocator.Trim();
-        MethodAllocator.Trim();
-        CtorAllocator.Trim();
+        PropArena.Trim(); // free extra space
+        EventArena.Trim();
+        FieldArena.Trim();
+        MethodArena.Trim();
+        CtorArena.Trim();
 
         const char* name = CopyFromStr(_name);
         uint hash = XXHash32::hash(name, strlen(name), TG_ENTRY_SEED);
@@ -27,15 +28,20 @@ namespace Tangara {
         std::sort(_types.begin(), _types.end(), tgCompareTypes);
         tgEntry result = {hash, name, false,
                           _types.size(), CopyFromVector(_types),
-                          FieldAllocator.GetLength(), FieldAllocator.GetRawData(),
-                          PropAllocator.GetLength(), PropAllocator.GetRawData(),
-                          MethodAllocator.GetLength(), MethodAllocator.GetRawData(),
-                          EventAllocator.GetLength(), EventAllocator.GetRawData(),
-                          CtorAllocator.GetLength(), CtorAllocator.GetRawData()};
+                          FieldArena.GetLength(), FieldArena.GetRawData(),
+                          PropArena.GetLength(), PropArena.GetRawData(),
+                          MethodArena.GetLength(), MethodArena.GetRawData(),
+                          EventArena.GetLength(), EventArena.GetRawData(),
+                          CtorArena.GetLength(), CtorArena.GetRawData()};
         return result;
     }
 
-    void EntryBuilder::AppendType(const tgType &type) {
+    tgType* EntryBuilder::AppendType(const tgType &type) {
         _types.push_back(type);
+        return &_types.back();
+    }
+
+    StructBuilder EntryBuilder::CreateStruct(const char *stName) {
+        return {stName, _rule, *this};
     }
 }

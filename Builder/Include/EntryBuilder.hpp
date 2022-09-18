@@ -1,7 +1,7 @@
 #ifndef TANGARA_ENTRYBUILDER_HPP
 #define TANGARA_ENTRYBUILDER_HPP
 #include <algorithm>
-#include "EntryAllocator.hpp"
+#include "EntryArena.hpp"
 #include "EntryRule.hpp"
 #include "tg_structs.h"
 #include "xxhash/xxhash32.h"
@@ -9,6 +9,7 @@
 
 namespace Tangara {
     struct ClassBuilder;
+    struct StructBuilder;
 
     struct EntryBuilder {
     public:
@@ -17,15 +18,16 @@ namespace Tangara {
         ~EntryBuilder();
 
         ClassBuilder CreateClass(const char* clName);
+        StructBuilder CreateStruct(const char* stName);
         tgEntry Build();
 
-        void AppendType(const tgType& type);
+        tgType* AppendType(const tgType& type);
 
-        EntryAllocator<tgField> FieldAllocator;
-        EntryAllocator<tgProp> PropAllocator;
-        EntryAllocator<tgEvent> EventAllocator;
-        EntryAllocator<tgMethod> MethodAllocator;
-        EntryAllocator<tgCtor> CtorAllocator;
+        EntryArena<tgField> FieldArena;
+        EntryArena<tgProp> PropArena;
+        EntryArena<tgEvent> EventArena;
+        EntryArena<tgMethod> MethodArena;
+        EntryArena<tgCtor> CtorArena;
     private:
         std::string _name;
         EntryRule* _rule;

@@ -4,15 +4,15 @@
 
 namespace Tangara {
     template<typename T>
-    struct EntryAllocator {
+    struct EntryArena {
     public:
-        EntryAllocator() : EntryAllocator(1 << 7) { }
+        EntryArena() : EntryArena(1 << 7) { }
 
-        explicit EntryAllocator(size_t max_size) :
+        explicit EntryArena(size_t max_size) :
                 _start(0), _length(0), _capacity(max_size), _data((T*)calloc(max_size, sizeof(T)))
         { }
 
-        ~EntryAllocator() {
+        ~EntryArena() {
             free(_data);
         }
 
@@ -20,12 +20,13 @@ namespace Tangara {
             _start = _length; // move '_start' to the end of filled data
         }
 
-        void Append(T elem) {
+        T* Append(T elem) {
             _data[_length++] = elem;
             if (_length > _capacity) {
                 _capacity <<= 1; // *= 2 but faster
                 _data = (T*) realloc(_data, _capacity * sizeof(T));
             }
+            return &_data[_length];
         }
 
         void End(T **out_data, size_t &count) {

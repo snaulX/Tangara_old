@@ -12,73 +12,69 @@ namespace Tangara {
         } else {
             _name = name;
         }
-        _entryBuilder.FieldAllocator.Begin();
-        _entryBuilder.MethodAllocator.Begin();
-        _entryBuilder.PropAllocator.Begin();
-        _entryBuilder.EventAllocator.Begin();
-        _entryBuilder.CtorAllocator.Begin();
+        _entryBuilder.FieldArena.Begin();
+        _entryBuilder.MethodArena.Begin();
+        _entryBuilder.PropArena.Begin();
+        _entryBuilder.EventArena.Begin();
+        _entryBuilder.CtorArena.Begin();
     }
 
     tgType ClassBuilder::Build() {
         // Fields
         size_t fields_count = 0;
         tgField *fields = nullptr;
-        _entryBuilder.FieldAllocator.End(&fields, fields_count);
+        _entryBuilder.FieldArena.End(&fields, fields_count);
         // Methods
         size_t methods_count = 0;
         tgMethod *methods = nullptr;
-        _entryBuilder.MethodAllocator.End(&methods, methods_count);
+        _entryBuilder.MethodArena.End(&methods, methods_count);
         // Parents
         size_t parents_count = _parents.size();
-        size_t parents_size = parents_count * sizeof(tgTypeRef);
-        tgTypeRef *parents = (tgTypeRef*)malloc(parents_size);
-        memcpy_s(parents, parents_size, _parents.data(), parents_size);
-        _parents.clear(); // remove all data from vector
-        _parents.shrink_to_fit(); // free all allocated memory
         // Constructors
         size_t ctors_count = 0;
         tgCtor *ctors = nullptr;
-        _entryBuilder.CtorAllocator.End(&ctors, ctors_count);
+        _entryBuilder.CtorArena.End(&ctors, ctors_count);
         // Properties
         size_t props_count = 0;
         tgProp *props = nullptr;
-        _entryBuilder.PropAllocator.End(&props, props_count);
+        _entryBuilder.PropArena.End(&props, props_count);
         // Events
         size_t events_count = 0;
         tgEvent *events = nullptr;
-        _entryBuilder.EventAllocator.End(&events, events_count);
+        _entryBuilder.EventArena.End(&events, events_count);
         // Last code
         const char* name = CopyFromStr(_name);
         uint hash = XXHash32::hash(name, strlen(name), TG_TYPE_SEED);
         tgType result = {hash, name, _access, TypeKind_Class,
-                         parents_count, parents,
+                         parents_count, CopyFromVector(_parents),
                          methods_count, methods,
                          ctors_count, ctors,
                          fields_count, fields,
                          props_count, props,
                          events_count, events};
+        _parents.clear();
         _entryBuilder.AppendType(result);
         return result;
     }
 
     void ClassBuilder::AppendField(const tgField &field) {
-        _entryBuilder.FieldAllocator.Append(field);
+        _entryBuilder.FieldArena.Append(field);
     }
 
     void ClassBuilder::AppendMethod(const tgMethod &method) {
-        _entryBuilder.MethodAllocator.Append(method);
+        _entryBuilder.MethodArena.Append(method);
     }
 
     void ClassBuilder::AppendProp(const tgProp &prop) {
-        _entryBuilder.PropAllocator.Append(prop);
+        _entryBuilder.PropArena.Append(prop);
     }
 
     void ClassBuilder::AppendEvent(const tgEvent &event) {
-        _entryBuilder.EventAllocator.Append(event);
+        _entryBuilder.EventArena.Append(event);
     }
 
     void ClassBuilder::AppendCtor(const tgCtor &ctor) {
-        _entryBuilder.CtorAllocator.Append(ctor);
+        _entryBuilder.CtorArena.Append(ctor);
     }
 
     FieldBuilder<ClassBuilder> ClassBuilder::CreateField(const char *name, const tgTypeRef &type) {
