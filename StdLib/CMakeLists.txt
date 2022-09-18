@@ -14,3 +14,4 @@ endif()
 
 target_include_directories(Tangara.Std PUBLIC Include/)
 target_link_libraries(Tangara.Std PUBLIC Tangara)
+target_link_libraries(Tangara.Std PRIVATE Tangara.Builder)
