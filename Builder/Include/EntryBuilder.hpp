@@ -18,6 +18,7 @@ namespace Tangara {
         ~EntryBuilder();
 
         ClassBuilder CreateClass(const char* clName);
+        ClassBuilder CreateFinalClass(const char* clName);
         StructBuilder CreateStruct(const char* stName);
         tgEntry Build();
 

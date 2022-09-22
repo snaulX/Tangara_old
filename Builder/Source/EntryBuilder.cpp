@@ -15,6 +15,13 @@ namespace Tangara {
         return {clName, _rule, *this};
     }
 
+
+    ClassBuilder EntryBuilder::CreateFinalClass(const char *clName) {
+        ClassBuilder cb = {clName, _rule, *this};
+        cb.SetFinal();
+        return cb;
+    }
+
     tgEntry EntryBuilder::Build() {
         PropArena.Trim(); // free extra space
         EventArena.Trim();

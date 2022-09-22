@@ -9,6 +9,7 @@ namespace Tangara {
         if (rule) {
             _name = rule->GetTypeName(name);
             _access = rule->GetTypeAccess();
+            _isFinal = rule->GetFinalClass();
         } else {
             _name = name;
         }
@@ -45,7 +46,7 @@ namespace Tangara {
         // Last code
         const char* name = CopyFromStr(_name);
         uint hash = XXHash32::hash(name, strlen(name), TG_TYPE_SEED);
-        tgType result = {hash, name, _access, TypeKind_Class,
+        tgType result = {hash, name, _access, _isFinal ? TypeKind_FinalClass : TypeKind_Class,
                          parents_count, CopyFromVector(_parents),
                          methods_count, methods,
                          ctors_count, ctors,
@@ -62,6 +63,16 @@ namespace Tangara {
     }
 
     void ClassBuilder::AppendMethod(const tgMethod &method) {
+        if (method.kind == MethodKind_Abstract) {
+            // TODO: show error that virtual method cannot be in non-abstract class
+            return;
+        }
+        if (_isFinal) {
+            if (method.kind == MethodKind_Virtual) {
+                // TODO: show error that virtual method cannot be in final class
+                return;
+            }
+        }
         _entryBuilder.MethodArena.Append(method);
     }
 
@@ -100,6 +111,11 @@ namespace Tangara {
 
     ClassBuilder &ClassBuilder::Inherits(const tgTypeRef &type) {
         _parents.push_back(type);
+        return *this;
+    }
+
+    ClassBuilder &ClassBuilder::SetFinal(bool isFinal) {
+        _isFinal = isFinal;
         return *this;
     }
 

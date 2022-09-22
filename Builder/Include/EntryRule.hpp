@@ -19,17 +19,20 @@ namespace Tangara {
         void Namespace(const char *ns) { _nameSpace = ns; }
         void TypeAccess(tgAccessModifier am) { _typeAccess = am; }
         void UsingNamespace(const char *ns) { _usingNameSpaces.push_back(ns); }
+        void FinalClass(bool isFinal = true) { _classFinal = isFinal; }
         void Enable() { _parent->_child = this; }
         void Disable() { _parent->_child = nullptr; }
         void Free();
 
         std::string GetTypeName(const char* tn);
         [[nodiscard]] tgAccessModifier GetTypeAccess() const { return _typeAccess; }
+        [[nodiscard]] bool GetFinalClass() const { return _classFinal; }
     private:
         EntryRule* _parent{};
         EntryRule* _child{};
 
         const char* _nameSpace{};
+        bool _classFinal = false;
         tgAccessModifier _typeAccess = AccessModifier_Internal;
         std::vector<const char*> _usingNameSpaces;
 

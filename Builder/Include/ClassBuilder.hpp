@@ -20,6 +20,7 @@ namespace Tangara {
         PropertyBuilder<ClassBuilder> CreateProperty(const char *name, const tgTypeRef &type);
         MethodBuilder<ClassBuilder> CreateMethod(const char *name);
         ConstructorBuilder<ClassBuilder> CreateConstructor();
+        ClassBuilder &SetFinal(bool isFinal = true);
         ClassBuilder &SetAccess(tgAccessModifier am);
         ClassBuilder &Inherits(const tgTypeRef &type);
         tgType Build();
@@ -34,6 +35,7 @@ namespace Tangara {
 
         std::vector<tgTypeRef> _parents;
         std::string _name;
+        bool _isFinal = false;
         tgAccessModifier _access = AccessModifier_Internal;
         EntryBuilder& _entryBuilder;
     };
