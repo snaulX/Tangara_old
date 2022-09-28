@@ -17,6 +17,7 @@ struct tgProp;
 struct tgEvent;
 struct tgEvent;
 struct tgTypeRef;
+struct tgLazyObject;
 #else
 #include <stdbool.h>
 
@@ -31,13 +32,18 @@ typedef struct tgField tgField;
 typedef struct tgProp tgProp;
 typedef struct tgEvent tgEvent;
 typedef struct tgTypeRef tgTypeRef;
+typedef struct tgLazyObject tgLazyObject;
 #endif
 
 typedef tgObject*(*tgMethodFuncPtr)(tgObject*, size_t, tgObject*, void*);
 typedef tgObject*(*tgCtorFuncPtr)(size_t, tgObject*, void*);
 typedef tgObject*(*tgPropGetFuncPtr)(tgObject*, void*);
 typedef void(*tgPropSetFuncPtr)(tgObject*, tgObject*, void*);
-typedef tgObject*(*tgLazyValueFuncPtr)(void*);
+
+struct tgLazyObject {
+    tgObject*(*lazyPtr)(void*);
+    void *funcPtr;
+};
 
 struct tgConstValue {
     enum tgValueType type;

@@ -24,6 +24,8 @@ inline bool tgCompareEntries(tgEntry lhs, tgEntry rhs) {
     return lhs.hash < rhs.hash;
 }
 
+tgConstValue tgDefaultValue(tgType* type);
+
 #ifdef __cplusplus
 }
 #endif

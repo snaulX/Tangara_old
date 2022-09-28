@@ -53,6 +53,7 @@ enum tgValueType {
     /// UTF-8 string
     ValueType_Str,
     ValueType_Array,
+    ValueType_Enum,
     /// Value with lazy initialization
     ValueType_Lazy
 };

@@ -57,3 +57,44 @@ const tgType *tgResolveTypeRef(tgTypeRef *type_ref, tgEntry* in_entry) {
         return result;
     }
 }
+
+static tgObject *defaultEmptyCtorValue(void *ctor_ptr) {
+    tgCtor *ctor = (tgCtor*)ctor_ptr;
+    tgCtorFuncPtr ctor_func = ctor->ctorptr;
+    return ctor_func(0, NULL, ctor->userptr);
+}
+
+tgConstValue tgDefaultValue(tgType* type) {
+    tgConstValue result = {};
+    switch (type->kind) {
+        case TypeKind_Interface:
+        case TypeKind_FinalClass:
+        case TypeKind_Class:
+        case TypeKind_AbstractClass:
+            result.type = ValueType_Null;
+            result.value = NULL;
+            break;
+        case TypeKind_Struct:
+            result.type = ValueType_Lazy;
+            for (size_t i = type->ctors_size; i > 0; --i) {
+                tgCtor* ctor = &type->ctors[i];
+                if (ctor->params.params_count == 0) {
+                    tgLazyObject *lazyStructInit = (tgLazyObject*) malloc(sizeof(tgLazyObject));
+                    lazyStructInit->lazyPtr = defaultEmptyCtorValue;
+                    lazyStructInit->funcPtr = ctor;
+                }
+            }
+            break;
+        case TypeKind_StaticClass:
+            break;
+        case TypeKind_TypeAlias:
+            break;
+        case TypeKind_Singleton:
+            break;
+        case TypeKind_Enum:
+            result.type = ValueType_Enum;
+            result.value = &type->fields[0].default_value;
+            break;
+    }
+    return result;
+}

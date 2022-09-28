@@ -9,6 +9,7 @@ namespace Tangara {
         result->type = (tgType*) custom_type;
         result->data_size = 0;
         result->data = nullptr;
+        // TODO: implement every field with default value using `tgDefaultValue`
         return result;
     }
 

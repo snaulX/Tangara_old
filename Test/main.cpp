@@ -49,7 +49,7 @@ int main()
         .Inherits(TgRef("Entity"))
         .CreateProperty("ReloadTime", TgRef("int"))
             .SetKind(MethodKind_Static)
-            //.SetAttribute("ConsoleVar", TgArgs(TgValue::CStr("reload_time")))
+            //.SetAttribute(TgRef("ConsoleVar"), TgArgs(TgValue::CStr("reload_time")))
             .Build()
         .Build();
     //eerule.Disable();
