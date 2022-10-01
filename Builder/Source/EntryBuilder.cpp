@@ -1,6 +1,7 @@
 #include "EntryBuilder.hpp"
 #include "ClassBuilder.hpp"
 #include "StructBuilder.hpp"
+#include "EnumBuilder.hpp"
 #include "Utils.hpp"
 
 namespace Tangara {
@@ -50,5 +51,9 @@ namespace Tangara {
 
     StructBuilder EntryBuilder::CreateStruct(const char *stName) {
         return {stName, _rule, *this};
+    }
+
+    EnumBuilder EntryBuilder::CreateEnum(const char *enName) {
+        return {enName, _rule, *this};
     }
 }

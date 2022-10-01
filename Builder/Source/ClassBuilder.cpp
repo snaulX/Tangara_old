@@ -106,17 +106,17 @@ namespace Tangara {
 
     ClassBuilder &ClassBuilder::SetAccess(tgAccessModifier am) {
         _access = am;
-        return *this;
+        RETURN_THIS()
     }
 
     ClassBuilder &ClassBuilder::Inherits(const tgTypeRef &type) {
         _parents.push_back(type);
-        return *this;
+        RETURN_THIS()
     }
 
     ClassBuilder &ClassBuilder::SetFinal(bool isFinal) {
         _isFinal = isFinal;
-        return *this;
+        RETURN_THIS()
     }
 
     ClassBuilder::~ClassBuilder() = default;

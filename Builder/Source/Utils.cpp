@@ -9,4 +9,11 @@ namespace Tangara {
         //result[str_size-1] = '\0';
         return result;
     }
+
+    char* StrNewCpy(char* str) {
+        size_t str_size = strlen(str) + 1;
+        char* new_str = (char*) malloc(str_size);
+        strcpy_s(new_str, str_size, str);
+        return new_str;
+    }
 }

@@ -10,6 +10,7 @@
 namespace Tangara {
     struct ClassBuilder;
     struct StructBuilder;
+    struct EnumBuilder;
 
     struct EntryBuilder {
     public:
@@ -20,6 +21,7 @@ namespace Tangara {
         ClassBuilder CreateClass(const char* clName);
         ClassBuilder CreateFinalClass(const char* clName);
         StructBuilder CreateStruct(const char* stName);
+        EnumBuilder CreateEnum(const char* enName);
         tgEntry Build();
 
         tgType* AppendType(const tgType& type);

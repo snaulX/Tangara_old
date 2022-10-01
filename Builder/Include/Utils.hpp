@@ -6,6 +6,8 @@
 namespace Tangara {
     char* CopyFromStr(const std::string& str);
 
+    char* StrNewCpy(char* str);
+
     template<typename T>
     T* CopyFromVector(const std::vector<T> &vec) {
         size_t size = vec.size() * sizeof(T);

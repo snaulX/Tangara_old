@@ -125,12 +125,12 @@ namespace Tangara {
 
     StructBuilder &StructBuilder::SetAccess(tgAccessModifier am) {
         _access = am;
-        return *this;
+        RETURN_THIS()
     }
 
     StructBuilder &StructBuilder::Inherits(const tgTypeRef &type) {
         _parents.push_back(type);
-        return *this;
+        RETURN_THIS()
     }
 
     StructBuilder::~StructBuilder() = default;

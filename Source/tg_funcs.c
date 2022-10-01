@@ -64,6 +64,11 @@ static tgObject *defaultEmptyCtorValue(void *ctor_ptr) {
     return ctor_func(0, NULL, ctor->userptr);
 }
 
+static tgObject *getStaticPropValue(void *prop_ptr) {
+    tgProp *prop = (tgProp*)prop_ptr;
+    return prop->getfuncptr(NULL, prop->userptr);
+}
+
 tgConstValue tgDefaultValue(tgType* type) {
     tgConstValue result = {};
     switch (type->kind) {
@@ -76,7 +81,7 @@ tgConstValue tgDefaultValue(tgType* type) {
             break;
         case TypeKind_Struct:
             result.type = ValueType_Lazy;
-            for (size_t i = type->ctors_size; i > 0; --i) {
+            for (int i = type->ctors_size-1; i >= 0; --i) {
                 tgCtor* ctor = &type->ctors[i];
                 if (ctor->params.params_count == 0) {
                     tgLazyObject *lazyStructInit = (tgLazyObject*) malloc(sizeof(tgLazyObject));
@@ -90,6 +95,16 @@ tgConstValue tgDefaultValue(tgType* type) {
         case TypeKind_TypeAlias:
             break;
         case TypeKind_Singleton:
+            result.type = ValueType_Lazy;
+            tgLazyObject *lazySingleton = (tgLazyObject*) malloc(sizeof(tgLazyObject));
+            lazySingleton->lazyPtr = getStaticPropValue;
+            /*tgProp *instanceProp;
+            for (int i = type->props_size-1; i >= 0; --i) {
+                if (strcmp("Instance", type->props[i].name) == 0) {
+                    instanceProp = &type->props[i];
+                }
+            }*/
+            lazySingleton->funcPtr = &type->props[type->props_size-1]; // get instance property
             break;
         case TypeKind_Enum:
             result.type = ValueType_Enum;
