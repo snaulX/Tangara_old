@@ -19,6 +19,8 @@ namespace Tangara {
         std::string _name;
         tgAccessModifier _access = AccessModifier_Internal;
         EntryBuilder& _entryBuilder;
+
+        uint32_t _defaultValue = 0;
     };
 
 } // Tangara

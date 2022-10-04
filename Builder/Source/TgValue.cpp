@@ -1,6 +1,5 @@
 #include "TgValue.hpp"
 #include <cstring>
-#include <cstdlib>
 
 namespace Tangara {
     namespace TgValue {
@@ -9,12 +8,6 @@ namespace Tangara {
             char* data = (char*)malloc(data_size);
             strcpy_s(data, data_size, str);
             return {ValueType_CStr, (void*) data};
-        }
-
-        tgConstValue Int(int value) {
-            int* data = (int*)malloc(sizeof(int));
-            *data = value;
-            return {ValueType_Int, (void*) data};
         }
     };
 }

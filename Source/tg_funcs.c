@@ -70,7 +70,7 @@ static tgObject *getStaticPropValue(void *prop_ptr) {
 }
 
 tgConstValue tgDefaultValue(tgType* type) {
-    tgConstValue result = {};
+    tgConstValue result = {ValueType_Null, NULL};
     switch (type->kind) {
         case TypeKind_Interface:
         case TypeKind_FinalClass:
