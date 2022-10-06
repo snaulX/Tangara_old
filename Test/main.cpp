@@ -74,7 +74,7 @@ int main()
         .Literal("OK")
         .Literal("Failed")
         .Build();
-    eb.CreateClass("Auth")
+    auto auth_class = eb.CreateClass("Auth")
         .SetAccess(AccessModifier_Public)
         .CreateField("_password", TgRef("CString"))
             .SetAccess(AccessModifier_Private)
@@ -92,6 +92,8 @@ int main()
             .Build()
         //.CreateProperty("MyProp", TgRef("PropType")).Build()
         .Build();
+    tgObject *auth_obj = auth_class.ctors[0].ctorptr(0, nullptr, nullptr);
+    auth_class.methods[0].methodptr(auth_obj, 1, tgConvertValToObj(TgValue::CStr("password")), nullptr);
     auto eerule = EntryRule(&rule);
     eerule.UsingNamespace("Enigma.Engine");
     //eerule.Enable();

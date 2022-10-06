@@ -4,11 +4,11 @@
 
 namespace Tangara {
     struct IMethodImpl {
-        virtual tgMethodFuncPtr GetImplementaion() {
+        virtual tgMethodFuncPtr GetImplementaion() const {
             return nullptr; // TODO: throw Tangara excpetion
         }
 
-        virtual void *GetCustomObject() {
+        virtual void *GetCustomObject() const {
             return nullptr;
         }
     };

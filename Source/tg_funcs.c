@@ -113,3 +113,75 @@ tgConstValue tgDefaultValue(tgType* type) {
     }
     return result;
 }
+
+tgObject *tgConvertValToObj(tgConstValue value) {
+    tgObject *result = (tgObject*) malloc(sizeof(tgObject));
+    result->type = NULL;
+    // TODO: Fill other types
+    // TODO: fix types for all cases
+    switch (value.type) {
+        case ValueType_Null:
+            result->data_size = 0;
+            result->data = NULL;
+            break;
+        case ValueType_CStr:
+            char *raw_cstr_value = value.value;
+            result->data_size = strlen(raw_cstr_value) + 1;
+            result->data = raw_cstr_value;
+            break;
+        case ValueType_Bool:
+            break;
+        case ValueType_Byte:
+            unsigned char *raw_byte_value = value.value;
+            result->data_size = sizeof(unsigned char);
+            result->data = raw_byte_value;
+            break;
+        case ValueType_Short:
+            short *raw_short_value = value.value;
+            result->data_size = sizeof(short);
+            result->data = raw_short_value;
+            break;
+        case ValueType_Int:
+            int *raw_int_value = value.value;
+            result->data_size = sizeof(int);
+            result->data = raw_int_value;
+            break;
+        case ValueType_Long:
+            long long *raw_long_value = value.value;
+            result->data_size = sizeof(long long);
+            result->data = raw_long_value;
+            break;
+        case ValueType_Float:
+            float *raw_float_value = value.value;
+            result->data_size = sizeof(float);
+            result->data = raw_float_value;
+            break;
+        case ValueType_Double:
+            double *raw_double_value = value.value;
+            result->data_size = sizeof(double);
+            result->data = raw_double_value;
+            break;
+        case ValueType_SByte:
+            char *raw_sbyte_value = value.value;
+            result->data_size = sizeof(char);
+            result->data = raw_sbyte_value;
+            break;
+        case ValueType_UShort:
+            break;
+        case ValueType_UInt:
+            break;
+        case ValueType_ULong:
+            break;
+        case ValueType_Str:
+            break;
+        case ValueType_Array:
+            break;
+        case ValueType_Enum:
+            break;
+        case ValueType_Lazy:
+            tgLazyObject *lazy_value = value.value;
+            result = lazy_value->lazyPtr(lazy_value->funcPtr);
+            break;
+    }
+    return result;
+}

@@ -26,6 +26,8 @@ inline bool tgCompareEntries(tgEntry lhs, tgEntry rhs) {
 
 tgConstValue tgDefaultValue(tgType* type);
 
+tgObject* tgConvertValToObj(tgConstValue value);
+
 #ifdef __cplusplus
 }
 #endif

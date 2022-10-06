@@ -7,11 +7,11 @@ namespace Tangara {
     struct NativeCtorImpl : public ICtorImpl {
         NativeCtorImpl(tgCtorFuncPtr funcPtr) : _funcPtr(funcPtr) {}
 
-        tgCtorFuncPtr GetImplementaion() {
+        tgCtorFuncPtr GetImplementaion() const override {
             return _funcPtr;
         }
 
-        void *GetCustomObject() {
+        void *GetCustomObject() const override {
             return nullptr;
         }
 

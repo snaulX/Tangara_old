@@ -7,11 +7,11 @@ namespace Tangara {
     struct NativeMethodImpl : public IMethodImpl {
         NativeMethodImpl(tgMethodFuncPtr funcPtr) : _funcPtr(funcPtr) {}
 
-        tgMethodFuncPtr GetImplementaion() {
+        tgMethodFuncPtr GetImplementaion() const override {
             return _funcPtr;
         }
 
-        void *GetCustomObject() {
+        void *GetCustomObject() const override {
             return nullptr;
         }
 
