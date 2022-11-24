@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TangaraRust.iml" filepath="$PROJECT_DIR$/TangaraRust.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tangara.iml" filepath="$PROJECT_DIR$/Tangara.iml" />
     </modules>
   </component>
 </project>

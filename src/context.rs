@@ -1,16 +1,16 @@
 use crate::entry::TgEntry;
-use std::{fs, io};
 use std::fs::File;
 use std::io::BufRead;
+use std::{fs, io};
 
 pub struct TgContext<'context> {
-    pub(crate) entries: Vec<TgEntry<'context>>
+    pub(crate) entries: Vec<TgEntry<'context>>,
 }
 
 impl<'context> TgContext<'context> {
     pub fn create() -> TgContext<'context> {
-        TgContext{
-            entries: Vec::new()
+        TgContext {
+            entries: Vec::new(),
         }
     }
 
@@ -35,6 +35,6 @@ impl<'context> TgContext<'context> {
 
         //self.entries.push(loaded_entry);
         //return loaded_entry;
-        TgEntry::create(/*entry_name.as_str()*/file_name, Vec::new())
+        TgEntry::create(/*entry_name.as_str()*/ file_name, Vec::new())
     }
 }
