@@ -1,3 +1,4 @@
+TgBuild.Include('Tangara.CSharp') -- include tgbuild module
 local simdjson_target = require('simdjson/tgbuild.lua')
 my_target = TangaraCSharp.CreateFrom('Source/MyProject.csproj')
 my_target:Link(simdjson_target)
